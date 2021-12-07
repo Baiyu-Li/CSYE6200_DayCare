@@ -187,18 +187,13 @@ public class ViewTeacher extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnBackActionPerformed
-
-    private void backAction(){
+        ManageTeacher etp = new ManageTeacher(rightPanel);
         rightPanel.remove(this);
-        Component[] componentArray = rightPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManageTeacher msjp = (ManageTeacher) component;
+        rightPanel.add(etp);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.previous(rightPanel);        
-    }
-    
+        layout.previous(rightPanel);
+    }//GEN-LAST:event_btnBackActionPerformed
+  
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         txtFname.setEditable(true);

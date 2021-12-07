@@ -149,7 +149,7 @@ public class TeacherAnnualRegistration extends javax.swing.JPanel {
                 btnBack1ActionPerformed(evt);
             }
         });
-        add(btnBack1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 70, -1));
+        add(btnBack1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnViewTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTeacherActionPerformed
@@ -163,6 +163,11 @@ public class TeacherAnnualRegistration extends javax.swing.JPanel {
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         // TODO add your handling code here:
+        AnnualRegistration etp = new AnnualRegistration(rightPanel);
+        rightPanel.remove(this);
+        rightPanel.add(etp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.previous(rightPanel);
     }//GEN-LAST:event_btnBack1ActionPerformed
 
     private void backAction(){

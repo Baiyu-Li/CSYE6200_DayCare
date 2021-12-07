@@ -93,17 +93,12 @@ public class EnrollClassroom extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnBackActionPerformed
-
-    private void backAction(){
+        ManageClassroom etp = new ManageClassroom(rightPanel);
         rightPanel.remove(this);
-        Component[] componentArray = rightPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManageClassroom msjp = (ManageClassroom) component;
+        rightPanel.add(etp);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.previous(rightPanel);        
-    }
+        layout.previous(rightPanel);
+    }//GEN-LAST:event_btnBackActionPerformed
     
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
         // TODO add your handling code here:

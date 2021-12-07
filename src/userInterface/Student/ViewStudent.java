@@ -63,6 +63,7 @@ public class ViewStudent extends javax.swing.JPanel {
         txtAddress = new javax.swing.JTextField();
         txtId1 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        tbnVacancies = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -241,22 +242,27 @@ public class ViewStudent extends javax.swing.JPanel {
         jLabel14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel14.setText("Update Date");
         add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, -1, -1));
+
+        tbnVacancies.setBackground(new java.awt.Color(255, 255, 255));
+        tbnVacancies.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tbnVacancies.setText("View Records");
+        tbnVacancies.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbnVacanciesActionPerformed(evt);
+            }
+        });
+        add(tbnVacancies, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 130, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        
+        ManageStudent etp = new ManageStudent(rightPanel);
+        rightPanel.remove(this);
+        rightPanel.add(etp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.previous(rightPanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void backAction(){
-        rightPanel.remove(this);
-        Component[] componentArray = rightPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManageStudent msjp = (ManageStudent) component;
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.previous(rightPanel);        
-    }
-    
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         txtFname.setEditable(true);
@@ -312,6 +318,15 @@ public class ViewStudent extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtId1ActionPerformed
 
+    private void tbnVacanciesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnVacanciesActionPerformed
+        // TODO add your handling code here:
+        ViewStudentRecord etp = new ViewStudentRecord(rightPanel);
+        rightPanel.removeAll();
+        rightPanel.add("viewStudentRecordJPanel",etp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.last(rightPanel);
+    }//GEN-LAST:event_tbnVacanciesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -334,6 +349,7 @@ public class ViewStudent extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JButton tbnVacancies;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtFaname;

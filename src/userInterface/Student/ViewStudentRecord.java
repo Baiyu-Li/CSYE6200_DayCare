@@ -57,7 +57,7 @@ public class ViewStudentRecord extends javax.swing.JPanel {
                 btnBackActionPerformed(evt);
             }
         });
-        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 70, -1));
+        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, -1));
 
         btnAddRecord.setBackground(new java.awt.Color(255, 255, 255));
         btnAddRecord.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -144,18 +144,13 @@ public class ViewStudentRecord extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        
+        ViewStudent etp = new ViewStudent(rightPanel);
+        rightPanel.remove(this);
+        rightPanel.add(etp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.previous(rightPanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void backAction(){
-        rightPanel.remove(this);
-        Component[] componentArray = rightPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManageStudent msjp = (ManageStudent) component;
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.previous(rightPanel);        
-    }
-    
     private void btnAddRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRecordActionPerformed
         // TODO add your handling code here:
         AddRecord etp = new AddRecord(rightPanel);
