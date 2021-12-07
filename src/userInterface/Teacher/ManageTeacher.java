@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  */
 public class ManageTeacher extends javax.swing.JPanel {
 
-    JPanel rightPanel;
+    static JPanel rightPanel;
     
     /**
      * Creates new form manageTeacher
@@ -133,6 +133,7 @@ public class ManageTeacher extends javax.swing.JPanel {
         rightPanel.add("viewTeacherJPanel",etp);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
         layout.last(rightPanel);
+        
     }//GEN-LAST:event_tbnViewActionPerformed
 
     private void tbnEnrollTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnEnrollTeacherActionPerformed

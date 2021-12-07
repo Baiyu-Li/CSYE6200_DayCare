@@ -140,30 +140,51 @@ public class MainFrame extends javax.swing.JFrame {
         container.removeAll();
         container.add(mtp);
         pack();
+
     }//GEN-LAST:event_teacherActionPerformed
 
     private void studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentActionPerformed
         // TODO add your handling code here:
-        ManageStudent mtp = new ManageStudent(rightPanel);
+
+        ManageStudent mtp = new ManageStudent(container);
         container.removeAll();
         container.add(mtp);
         pack();
+        /*
+        rightPanel.removeAll();
+        rightPanel.add("ManageStudentJPanel",mtp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.last(rightPanel);
+        */
     }//GEN-LAST:event_studentActionPerformed
 
     private void classroomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classroomActionPerformed
         // TODO add your handling code here:
-        ManageClassroom mtp = new ManageClassroom(rightPanel);
+        ManageClassroom mtp = new ManageClassroom(container);
         container.removeAll();
         container.add(mtp);
         pack();
+        /*
+        rightPanel.removeAll();
+        rightPanel.add("ManageClassroomJPanel",mtp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.last(rightPanel);
+        */
     }//GEN-LAST:event_classroomActionPerformed
 
     private void registrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationActionPerformed
         // TODO add your handling code here:
-        AnnualRegistration mtp = new AnnualRegistration(rightPanel);
+
+        AnnualRegistration mtp = new AnnualRegistration(container);
         container.removeAll();
         container.add(mtp);
         pack();
+        /*
+        rightPanel.removeAll();
+        rightPanel.add("AnnualRegistrationJPanel",mtp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.last(rightPanel);
+        */
     }//GEN-LAST:event_registrationActionPerformed
 
     /**
