@@ -6,6 +6,7 @@ package userInterface;
 
 import java.awt.CardLayout;
 import userInterface.Classroom.ManageClassroom;
+import userInterface.Immunization.ViewStudentImmunization;
 import userInterface.Registration.AnnualRegistration;
 import userInterface.Student.ManageStudent;
 import userInterface.Teacher.ManageTeacher;
@@ -123,42 +124,46 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void immunizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_immunizationActionPerformed
         // TODO add your handling code here:
+        ViewStudentImmunization mtp = new ViewStudentImmunization(rightPanel);
+        container.removeAll();
+        container.add(mtp);
+        pack();
     }//GEN-LAST:event_immunizationActionPerformed
 
     private void teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacherActionPerformed
         // TODO add your handling code here:
         ManageTeacher mtp = new ManageTeacher(rightPanel);
-        rightPanel.removeAll();
+        /*rightPanel.removeAll();
         rightPanel.add("ManageTeacherJPanel",mtp);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        layout.last(rightPanel);*/
+        container.removeAll();
+        container.add(mtp);
+        pack();
     }//GEN-LAST:event_teacherActionPerformed
 
     private void studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentActionPerformed
         // TODO add your handling code here:
         ManageStudent mtp = new ManageStudent(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("ManageStudentJPanel",mtp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        container.removeAll();
+        container.add(mtp);
+        pack();
     }//GEN-LAST:event_studentActionPerformed
 
     private void classroomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classroomActionPerformed
         // TODO add your handling code here:
         ManageClassroom mtp = new ManageClassroom(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("ManageClassroomJPanel",mtp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        container.removeAll();
+        container.add(mtp);
+        pack();
     }//GEN-LAST:event_classroomActionPerformed
 
     private void registrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationActionPerformed
         // TODO add your handling code here:
         AnnualRegistration mtp = new AnnualRegistration(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("AnnualRegistrationJPanel",mtp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        container.removeAll();
+        container.add(mtp);
+        pack();
     }//GEN-LAST:event_registrationActionPerformed
 
     /**
