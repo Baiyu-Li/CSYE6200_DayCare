@@ -102,7 +102,7 @@ public class ManageStudent extends javax.swing.JPanel {
                 tbnVacanciesActionPerformed(evt);
             }
         });
-        add(tbnVacancies, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, 110, -1));
+        add(tbnVacancies, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, 130, -1));
 
         tbnEnrollStudent.setBackground(new java.awt.Color(255, 255, 255));
         tbnEnrollStudent.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -112,7 +112,7 @@ public class ManageStudent extends javax.swing.JPanel {
                 tbnEnrollStudentActionPerformed(evt);
             }
         });
-        add(tbnEnrollStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 320, 110, -1));
+        add(tbnEnrollStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 320, 120, -1));
 
         tbnView1.setBackground(new java.awt.Color(255, 255, 255));
         tbnView1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N

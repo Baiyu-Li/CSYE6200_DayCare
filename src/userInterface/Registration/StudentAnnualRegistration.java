@@ -149,7 +149,7 @@ public class StudentAnnualRegistration extends javax.swing.JPanel {
                 btnViewStudentActionPerformed(evt);
             }
         });
-        add(btnViewStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, 100, -1));
+        add(btnViewStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, 120, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -186,8 +186,5 @@ public class StudentAnnualRegistration extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JButton tbnView1;
-    private javax.swing.JButton tbnView2;
-    private javax.swing.JButton tbnView3;
     // End of variables declaration//GEN-END:variables
 }

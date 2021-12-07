@@ -57,7 +57,7 @@ public class TeacherAnnualRegistration extends javax.swing.JPanel {
                 btnViewTeacherActionPerformed(evt);
             }
         });
-        add(btnViewTeacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, 100, -1));
+        add(btnViewTeacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 360, 110, -1));
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel7.setText("Annual Registration Check");

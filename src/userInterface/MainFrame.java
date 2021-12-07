@@ -60,7 +60,7 @@ public class MainFrame extends javax.swing.JFrame {
         logoPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/images.jpeg"))); // NOI18N
-        logoPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, -1, -1));
+        logoPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, -1, -1));
 
         getContentPane().add(logoPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 650, 90));
 
@@ -124,7 +124,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void immunizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_immunizationActionPerformed
         // TODO add your handling code here:
-        ViewStudentImmunization mtp = new ViewStudentImmunization(rightPanel);
+        ViewStudentImmunization mtp = new ViewStudentImmunization(container);
         container.removeAll();
         container.add(mtp);
         pack();
@@ -132,20 +132,18 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacherActionPerformed
         // TODO add your handling code here:
-        ManageTeacher mtp = new ManageTeacher(rightPanel);
-        /*rightPanel.removeAll();
-        rightPanel.add("ManageTeacherJPanel",mtp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);*/
+        ManageTeacher mtp = new ManageTeacher(container);
         container.removeAll();
         container.add(mtp);
         pack();
-
+        ///rightPanel.removeAll();
+        //rightPanel.add("ManageTeacherJPanel",mtp);
+        //CardLayout layout = (CardLayout) rightPanel.getLayout();
+        //layout.last(rightPanel);
     }//GEN-LAST:event_teacherActionPerformed
 
     private void studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentActionPerformed
         // TODO add your handling code here:
-
         ManageStudent mtp = new ManageStudent(container);
         container.removeAll();
         container.add(mtp);
@@ -174,7 +172,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void registrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationActionPerformed
         // TODO add your handling code here:
-
         AnnualRegistration mtp = new AnnualRegistration(container);
         container.removeAll();
         container.add(mtp);

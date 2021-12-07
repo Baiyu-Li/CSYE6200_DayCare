@@ -10,8 +10,6 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JPanel;
 
-import userInterface.MainFrame;
-
 /**
  *
  * @author 83715
@@ -50,6 +48,7 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(650, 400));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
         btnBack.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -59,9 +58,11 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
                 btnBackActionPerformed(evt);
             }
         });
+        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, -1));
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel7.setText("Immunization Reminder");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
 
         RecordTable.setBackground(new java.awt.Color(255, 102, 102));
         RecordTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -99,13 +100,17 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
             RecordTable.getColumnModel().getColumn(4).setResizable(false);
         }
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 470, 100));
+
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(156, 219, 155));
         jLabel2.setText("Upcomming");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 102, 102));
         jLabel3.setText("Past Due");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
 
         RecordTable2.setBackground(new java.awt.Color(156, 219, 155));
         RecordTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -143,6 +148,8 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
             RecordTable2.getColumnModel().getColumn(4).setResizable(false);
         }
 
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, -1, 100));
+
         tbnView1.setBackground(new java.awt.Color(255, 255, 255));
         tbnView1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tbnView1.setText("View Detail");
@@ -151,6 +158,7 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
                 tbnView1ActionPerformed(evt);
             }
         });
+        add(tbnView1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 360, 110, -1));
 
         tbnVacancies.setBackground(new java.awt.Color(255, 255, 255));
         tbnVacancies.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -160,56 +168,7 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
                 tbnVacanciesActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(140, 140, 140)
-                .addComponent(jLabel7))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jLabel2))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jLabel3))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(310, 310, 310)
-                .addComponent(tbnVacancies, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(tbnView1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBack)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel7)))
-                .addGap(2, 2, 2)
-                .addComponent(jLabel2)
-                .addGap(8, 8, 8)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jLabel3)
-                .addGap(8, 8, 8)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tbnVacancies)
-                    .addComponent(tbnView1)))
-        );
+        add(tbnVacancies, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 360, 120, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -217,11 +176,13 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnBackActionPerformed
 
+    
+    
     private void tbnView1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnView1ActionPerformed
         // TODO add your handling code here:
-        ViewStudentUpcomming etp = new ViewStudentUpcomming(rightPanel);
+        ViewStudent etp = new ViewStudent(rightPanel);
         rightPanel.removeAll();
-        rightPanel.add("ViewStudentUpcommingJPanel",etp);
+        rightPanel.add("viewStudentJPanel",etp);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
         layout.last(rightPanel);
     }//GEN-LAST:event_tbnView1ActionPerformed
@@ -230,8 +191,9 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
         // TODO add your handling code here:
         ViewStudentRecord etp = new ViewStudentRecord(rightPanel);
         rightPanel.removeAll();
-        rightPanel.add(etp);
-        
+        rightPanel.add("viewStudentRecordJPanel",etp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.last(rightPanel);
     }//GEN-LAST:event_tbnVacanciesActionPerformed
 
     private void backAction(){

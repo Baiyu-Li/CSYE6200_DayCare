@@ -44,8 +44,6 @@ public class ManageTeacher extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(650, 400));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-
         TeacherTable.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         TeacherTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -109,7 +107,7 @@ public class ManageTeacher extends javax.swing.JPanel {
                 tbnEnrollTeacherActionPerformed(evt);
             }
         });
-        add(tbnEnrollTeacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 350, 110, -1));
+        add(tbnEnrollTeacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, 130, -1));
 
         jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBox1.setText("Update >1 year");

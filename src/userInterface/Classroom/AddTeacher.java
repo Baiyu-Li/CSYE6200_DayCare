@@ -122,18 +122,13 @@ public class AddTeacher extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnBackActionPerformed
-
-    private void backAction(){
-        rightPanel.remove(this);
-        Component[] componentArray = rightPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManageClassroom msjp = (ManageClassroom) component;
+        EnrollClassroom etp = new EnrollClassroom(rightPanel);
+        rightPanel.removeAll();
+        rightPanel.add("createClassroomJPanel",etp);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.previous(rightPanel);        
-    }
-    
+        layout.last(rightPanel);
+    }//GEN-LAST:event_btnBackActionPerformed
+ 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
