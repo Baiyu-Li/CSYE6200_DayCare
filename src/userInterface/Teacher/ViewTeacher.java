@@ -53,6 +53,7 @@ public class ViewTeacher extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
+        tbnEnrollStudent = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -167,7 +168,7 @@ public class ViewTeacher extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, -1, 140));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, -1, 140));
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel7.setText("Teacher Detail");
@@ -183,6 +184,16 @@ public class ViewTeacher extends javax.swing.JPanel {
             }
         });
         add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 40, -1));
+
+        tbnEnrollStudent.setBackground(new java.awt.Color(255, 255, 255));
+        tbnEnrollStudent.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tbnEnrollStudent.setText("Add Student");
+        tbnEnrollStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbnEnrollStudentActionPerformed(evt);
+            }
+        });
+        add(tbnEnrollStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 120, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -229,6 +240,15 @@ public class ViewTeacher extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
 
+    private void tbnEnrollStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnEnrollStudentActionPerformed
+        // TODO add your handling code here:
+        AddStudent etp = new AddStudent(rightPanel);
+        rightPanel.removeAll();
+        rightPanel.add("addTeacherJPanel",etp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.last(rightPanel);
+    }//GEN-LAST:event_tbnEnrollStudentActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -247,6 +267,7 @@ public class ViewTeacher extends javax.swing.JPanel {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton tbnEnrollStudent;
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtFname;
     private javax.swing.JTextField txtId;
