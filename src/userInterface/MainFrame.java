@@ -4,7 +4,11 @@
  */
 package userInterface;
 
+
+import Controller.MainController;
+import Controller.SqliteController;
 import java.awt.CardLayout;
+import java.awt.event.ActionListener;
 import userInterface.Classroom.ManageClassroom;
 import userInterface.Immunization.ViewStudentImmunization;
 import userInterface.Registration.AnnualRegistration;
@@ -22,6 +26,13 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        
+        CardLayout clayout=(CardLayout)container.getLayout();
+        ManageTeacher mtp = new ManageTeacher(container);
+        container.add("teacherManage", mtp);
+        MainController mc=new MainController(this,container);
+        SqliteController.test();
+        this.teacherShow(e-> clayout.show(container, "teacherManage"));
     }
 
     /**
@@ -80,11 +91,6 @@ public class MainFrame extends javax.swing.JFrame {
         teacher.setBackground(new java.awt.Color(255, 255, 255));
         teacher.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         teacher.setText("Teacher");
-        teacher.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                teacherActionPerformed(evt);
-            }
-        });
         workPanel.add(teacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 110, -1));
 
         student.setBackground(new java.awt.Color(255, 255, 255));
@@ -129,19 +135,9 @@ public class MainFrame extends javax.swing.JFrame {
         container.add(mtp);
         pack();
     }//GEN-LAST:event_immunizationActionPerformed
-
-    private void teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacherActionPerformed
-        // TODO add your handling code here:
-        ManageTeacher mtp = new ManageTeacher(container);
-        container.removeAll();
-        container.add(mtp);
-        pack();
-        ///rightPanel.removeAll();
-        //rightPanel.add("ManageTeacherJPanel",mtp);
-        //CardLayout layout = (CardLayout) rightPanel.getLayout();
-        //layout.last(rightPanel);
-    }//GEN-LAST:event_teacherActionPerformed
-
+    public void teacherShow(ActionListener actionListener) {
+        teacher.addActionListener(actionListener);
+    }
     private void studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentActionPerformed
         // TODO add your handling code here:
         ManageStudent mtp = new ManageStudent(container);
