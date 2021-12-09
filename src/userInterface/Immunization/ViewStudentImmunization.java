@@ -8,7 +8,9 @@ import userInterface.Student.*;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -183,7 +185,14 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
     private void backAction(){
         
     }
-    
+    //import value from database
+    public void setTableUpcoming(List<Object[]> ol){
+        DefaultTableModel tableModel=(DefaultTableModel) RecordTable.getModel();
+        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Group"});
+        //tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "VaccineName","LastVacccinedDate","DoesCompleted"}); 
+        ol.forEach((e)-> {tableModel.addRow(e);});
+       RecordTable.setModel(tableModel);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable RecordTable;
