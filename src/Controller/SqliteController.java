@@ -28,18 +28,18 @@ public class SqliteController {
         
     }
     public static void test(){
-        createSubjectTable();
-        createPersonTable();
-        //createTeacherTable();
-        //createStudentTable();
-        createCourseTable();
-        createCourseEnrollTable();
-        createVaccineTable();
-        //createStudentImmunizationRecordTable();
-        //createTeacherImmunizationRecordTable();
+        //createSubjectTable();
+        //createPersonTable();
+        //createStudentSubjectTable();
+        //createCourseTable();
+        //createCourseEnrollTable();
+       // createVaccineTable();
+        //createImmunizationRecordTable();
+        
     }
     public static void connDB(){
         try{
+            //Class.forName(JDBC_DRIVER);
             conn=DriverManager.getConnection(DB_URL);
             stmt=conn.createStatement();
         }catch(Exception e){
@@ -72,7 +72,7 @@ public class SqliteController {
     }
     public static List<Object[]> getAllTeacher(){
         connDB();
-        String sql="SELECT * FROM Teachers";
+        String sql="SELECT * FROM Person WHERE PIdentity ='T'";
         List<Object[]> ol=new ArrayList<>();
         try{
             rs=stmt.executeQuery(sql);
@@ -82,7 +82,6 @@ public class SqliteController {
                         o[0]=rs.getString("FirstName");
                         o[0]=rs.getString("LastName");
                         o[0]=rs.getInt("Age");
-                        o[0]=rs.getInt("Group");
                         ol.add(o);
     		}
         }catch(SQLException e){
@@ -95,10 +94,10 @@ public class SqliteController {
     
     public static void createSubjectTable(){
         connDB();
-        //String dsql="drop table Subject";
-        String sql="create table IF NOT EXISTS Subject (SubjectID INTEGER PRIMARY KEY AUTOINCREMENT,SubjectName VARCHAR(45)) ";
+        //String dsql="drop table if exists Subject";
+        String sql="create table IF NOT EXISTS Subject (SubjectID INTEGER PRIMARY KEY,SubjectName VARCHAR(45)) ";
         try{
-            //stmt.execute(dsql);
+            //stmt.executeUpdate(dsql);
             stmt.execute(sql);
         }catch(SQLException e){
     		e.printStackTrace();
@@ -110,10 +109,10 @@ public class SqliteController {
     //using person table
     public static void createPersonTable(){
         connDB();
-        //String dsql="drop table Subject";
-        String sql="create table IF NOT EXISTS Person (id INTEGER PRIMARY KEY AUTOINCREMENT,fName VARCHAR(45),lName VARCHAR(45),Age INT,PIdentity VARCHAR(10)) ";
+        //String dsql="drop table if exists Person";
+        String sql="create table IF NOT EXISTS Person (id INTEGER PRIMARY KEY,fName VARCHAR(45),lName VARCHAR(45),Age INT,PIdentity VARCHAR(5)) ";
         try{
-            //stmt.execute(dsql);
+            //stmt.executeUpdate(dsql);
             stmt.execute(sql);
         }catch(SQLException e){
     		e.printStackTrace();
@@ -121,13 +120,13 @@ public class SqliteController {
     		closeDB();
     	}
     }
-    /*2 tables
-    public static void createTeacherTable(){
+    public static void createStudentSubjectTable(){
         connDB();
-        //String dsql="drop table Subject";
-        String sql="create table IF NOT EXISTS Teachers (tid INTEGER PRIMARY KEY AUTOINCREMENT,fName VARCHAR(45),lName VARCHAR(45),Age INT) ";
+        //String dsql="drop table if exists StudentSubject";
+        String sql="create table IF NOT EXISTS StudentSubject (id INTEGER PRIMARY KEY REFERENCES person(id),"
+                + "SubjectID INTEGER REFERENCES Subject(SubjectID)) ";
         try{
-            //stmt.execute(dsql);
+            //stmt.executeUpdate(dsql);
             stmt.execute(sql);
         }catch(SQLException e){
     		e.printStackTrace();
@@ -135,28 +134,15 @@ public class SqliteController {
     		closeDB();
     	}
     }
-    public static void createStudentTable(){
-        connDB();
-        //String dsql="drop table Subject";
-        String sql="create table IF NOT EXISTS Students (sid INTEGER PRIMARY KEY AUTOINCREMENT,fName VARCHAR(45),lName VARCHAR(45),Age INT,SubjectID INT REFERENCES Subject(SubjectID)) ";
-        try{
-            //stmt.execute(dsql);
-            stmt.execute(sql);
-        }catch(SQLException e){
-    		e.printStackTrace();
-    	}finally{
-    		closeDB();
-    	}
-    }
-*/
+
     public static void createCourseTable(){
         connDB();
-        //String dsql="drop table Subject";
-        String sql="create table IF NOT EXISTS Course (CourseID INTEGER PRIMARY KEY AUTOINCREMENT,"
+        //String dsql="drop table if exists Course";
+        String sql="create table IF NOT EXISTS Course (CourseID INTEGER PRIMARY KEY,"
                 + "CourseName VARCHAR(200),StartDate DATE,EndDate DATE,DayOfWeek VARCHAR(15),StartTime TIME,"
-                + "EndTime TIME,Location VARCHAR(200),SubjectID INT REFERENCES Subject(SubjectID),tid INT REFERENCES Teachers(tid)) ";
+                + "EndTime TIME,Location VARCHAR(200),SubjectID INTEGER REFERENCES Subject(SubjectID),tid INT REFERENCES person(id)) ";
         try{
-            //stmt.execute(dsql);
+            //stmt.executeUpdate(dsql);
             stmt.execute(sql);
         }catch(SQLException e){
     		e.printStackTrace();
@@ -167,11 +153,11 @@ public class SqliteController {
     
     public static void createCourseEnrollTable(){
         connDB();
-        //String dsql="drop table Subject";
-        String sql="create table IF NOT EXISTS CourseEnroll (CourseID INTEGER REFERENCES Course(CourseID),"
-                + "sid INTEGER REFERENCES Students(sid),PRIMARY KEY(CourseID,sid)) ";
+        //String dsql="drop table if exists CourseEnrollment";
+        String sql="create table IF NOT EXISTS CourseEnrollment (CourseID INTEGER REFERENCES Course(CourseID),"
+                + "sid INTEGER REFERENCES Person(id),PRIMARY KEY(CourseID,sid)) ";
         try{
-            //stmt.execute(dsql);
+            //stmt.executeUpdate(dsql);
             stmt.execute(sql);
         }catch(SQLException e){
     		e.printStackTrace();
@@ -183,11 +169,11 @@ public class SqliteController {
     //*******************************
     public static void createVaccineTable(){
         connDB();
-        //String dsql="drop table Subject";
+        //String dsql="drop table if exists Vaccine";
         String sql="create table IF NOT EXISTS Vaccine (VaccineID INTEGER PRIMARY KEY,"
-                + "sid INTEGER REFERENCES Students(sid)) ";
+                + "VaccineName VARCHAR(50),Rules VARCHAR(45),DoesRequired INT) ";
         try{
-            //stmt.execute(dsql);
+            //stmt.executeUpdate(dsql);
             stmt.execute(sql);
         }catch(SQLException e){
     		e.printStackTrace();
@@ -198,11 +184,11 @@ public class SqliteController {
     //reference person table
     public static void createImmunizationRecordTable(){
         connDB();
-        //String dsql="drop table Subject";
+        //String dsql="drop table if exists ImmunizationRecord";
         String sql="create table IF NOT EXISTS ImmunizationRecord (VaccineID INTEGER PRIMARY KEY REFERENCES Vaccine(VaccineID),"
-                + "id INTEGER REFERENCES Person(id),ImmunizedDate DATE,DoseCompleted INT) ";
+                + "id INTEGER REFERENCES Person(id),LastVaccineDate DATE,DoseCompleted INT) ";
         try{
-            //stmt.execute(dsql);
+            //stmt.executeUpdate(dsql);
             stmt.execute(sql);
         }catch(SQLException e){
     		e.printStackTrace();
@@ -210,40 +196,7 @@ public class SqliteController {
     		closeDB();
     	}
     }
-    /*teacher and student 2 kinds*****************
-    //need update
-    //*******************************
-    public static void createStudentImmunizationRecordTable(){
-        connDB();
-        //String dsql="drop table Subject";
-        String sql="create table IF NOT EXISTS ImmunizationRecord (VaccineID INTEGER PRIMARY KEY REFERENCES Vaccine(VaccineID),"
-                + "sid INTEGER REFERENCES Students(sid),ImmunizedDate DATE,DoseCompleted INT) ";
-        try{
-            //stmt.execute(dsql);
-            stmt.execute(sql);
-        }catch(SQLException e){
-    		e.printStackTrace();
-    	}finally{
-    		closeDB();
-    	}
-    }
-    //need update
-    //*******************************
-    public static void createTeacherImmunizationRecordTable(){
-        connDB();
-        //String dsql="drop table Subject";
-        String sql="create table IF NOT EXISTS ImmunizationRecord (VaccineID INTEGER PRIMARY KEY REFERENCES Vaccine(VaccineID),"
-                + "sid INTEGER REFERENCES Students(sid),ImmunizedDate DATE,DoseCompleted INT) ";
-        try{
-            //stmt.execute(dsql);
-            stmt.execute(sql);
-        }catch(SQLException e){
-    		e.printStackTrace();
-    	}finally{
-    		closeDB();
-    	}
-    }
-*/
+    
     public static void insertSubjectTable(){
         connDB();
         
