@@ -154,7 +154,7 @@ public class SqliteController {
         //String dsql="drop table Subject";
         String sql="create table IF NOT EXISTS Course (CourseID INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "CourseName VARCHAR(200),StartDate DATE,EndDate DATE,DayOfWeek VARCHAR(15),StartTime TIME,"
-                + "EndTime TIME,SubjectID INT REFERENCES Subject(SubjectID),tid INT REFERENCES Teachers(tid)) ";
+                + "EndTime TIME,Location VARCHAR(200),SubjectID INT REFERENCES Subject(SubjectID),tid INT REFERENCES Teachers(tid)) ";
         try{
             //stmt.execute(dsql);
             stmt.execute(sql);
