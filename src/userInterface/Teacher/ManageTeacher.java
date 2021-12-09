@@ -5,7 +5,9 @@
 package userInterface.Teacher;
 
 import java.awt.CardLayout;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -146,8 +148,15 @@ public class ManageTeacher extends javax.swing.JPanel {
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
-
-
+    
+    
+    //import value from database
+    public void setTable(List<Object[]> ol){
+        DefaultTableModel tableModel=(DefaultTableModel) TeacherTable.getModel();
+        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Group"}); 
+        ol.forEach((e)-> {tableModel.addRow(e);});
+       TeacherTable.setModel(tableModel);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TeacherTable;
     private javax.swing.JButton btnDelete;
