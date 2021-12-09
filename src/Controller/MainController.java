@@ -5,7 +5,9 @@
  */
 package Controller;
 
+import javax.swing.JPanel;
 import userInterface.MainFrame;
+import userInterface.Teacher.ManageTeacher;
 
 /**
  *
@@ -13,8 +15,16 @@ import userInterface.MainFrame;
  */
 public class MainController {
     private MainFrame mframe;
-    public MainController(MainFrame mf){
+    private JPanel container;
+    private ManageTeacher manageteacher;
+    public MainController(MainFrame mf,JPanel container){
         this.mframe=mf;
+        this.container=container;
+        mframe.teacherShow(e-> {
+            manageteacher=(ManageTeacher)this.container.getComponent(1);
+            manageteacher.setTable(SqliteController.getAllTeacher());
+        });
+       
     }
     
 }
