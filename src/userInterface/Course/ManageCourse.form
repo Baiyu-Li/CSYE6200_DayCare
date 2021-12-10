@@ -27,11 +27,6 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-      </Properties>
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
@@ -49,11 +44,13 @@
               <Font name="Arial" size="14" style="1"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="5" rowCount="4">
+              <Table columnCount="7" rowCount="4">
                 <Column editable="false" title="ID" type="java.lang.Integer"/>
                 <Column editable="false" title="Name" type="java.lang.String"/>
+                <Column editable="false" title="StarttoEndDate" type="java.lang.String"/>
                 <Column editable="false" title="Time" type="java.lang.String"/>
                 <Column editable="false" title="Loaction" type="java.lang.String"/>
+                <Column editable="false" title="Subejct" type="java.lang.String"/>
                 <Column editable="false" title="Instructor" type="java.lang.String"/>
               </Table>
             </Property>
