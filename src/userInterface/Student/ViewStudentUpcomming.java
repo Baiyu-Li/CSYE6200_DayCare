@@ -4,10 +4,13 @@
  */
 package userInterface.Student;
 
+import Controller.SqliteController;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,14 +18,17 @@ import javax.swing.JPanel;
  */
 public class ViewStudentUpcomming extends javax.swing.JPanel {
 
-    JPanel rightPanel;
+    JPanel container;
     
     /**
      * Creates new form manageTeacher
      */
-    public ViewStudentUpcomming(JPanel rp) {
+    private CardLayout clayout;
+    public ViewStudentUpcomming(JPanel container) {
         initComponents();     
-        rightPanel = rp;
+        this.container = container;
+        SqliteController.test();
+        clayout = (CardLayout) container.getLayout();
     }
 
     /**
@@ -42,10 +48,10 @@ public class ViewStudentUpcomming extends javax.swing.JPanel {
         txtId1 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        RecordTable = new javax.swing.JTable();
+        upcommingRecordTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        RecordTable1 = new javax.swing.JTable();
+        pastRecordTable = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -98,8 +104,8 @@ public class ViewStudentUpcomming extends javax.swing.JPanel {
         jLabel14.setText("Update Date");
         add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, -1, -1));
 
-        RecordTable.setBackground(new java.awt.Color(156, 219, 155));
-        RecordTable.setModel(new javax.swing.table.DefaultTableModel(
+        upcommingRecordTable.setBackground(new java.awt.Color(156, 219, 155));
+        upcommingRecordTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -125,11 +131,11 @@ public class ViewStudentUpcomming extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(RecordTable);
-        if (RecordTable.getColumnModel().getColumnCount() > 0) {
-            RecordTable.getColumnModel().getColumn(0).setResizable(false);
-            RecordTable.getColumnModel().getColumn(1).setResizable(false);
-            RecordTable.getColumnModel().getColumn(2).setResizable(false);
+        jScrollPane1.setViewportView(upcommingRecordTable);
+        if (upcommingRecordTable.getColumnModel().getColumnCount() > 0) {
+            upcommingRecordTable.getColumnModel().getColumn(0).setResizable(false);
+            upcommingRecordTable.getColumnModel().getColumn(1).setResizable(false);
+            upcommingRecordTable.getColumnModel().getColumn(2).setResizable(false);
         }
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, -1, 100));
@@ -139,8 +145,8 @@ public class ViewStudentUpcomming extends javax.swing.JPanel {
         jLabel2.setText("Upcomming");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
-        RecordTable1.setBackground(new java.awt.Color(255, 102, 102));
-        RecordTable1.setModel(new javax.swing.table.DefaultTableModel(
+        pastRecordTable.setBackground(new java.awt.Color(255, 102, 102));
+        pastRecordTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -166,11 +172,11 @@ public class ViewStudentUpcomming extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(RecordTable1);
-        if (RecordTable1.getColumnModel().getColumnCount() > 0) {
-            RecordTable1.getColumnModel().getColumn(0).setResizable(false);
-            RecordTable1.getColumnModel().getColumn(1).setResizable(false);
-            RecordTable1.getColumnModel().getColumn(2).setResizable(false);
+        jScrollPane2.setViewportView(pastRecordTable);
+        if (pastRecordTable.getColumnModel().getColumnCount() > 0) {
+            pastRecordTable.getColumnModel().getColumn(0).setResizable(false);
+            pastRecordTable.getColumnModel().getColumn(1).setResizable(false);
+            pastRecordTable.getColumnModel().getColumn(2).setResizable(false);
         }
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, -1, 100));
@@ -183,20 +189,14 @@ public class ViewStudentUpcomming extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        ViewStudent etp = new ViewStudent(rightPanel);
-        rightPanel.remove(this);
-        rightPanel.add(etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.previous(rightPanel);
+        ((ManageStudent)this.container.getComponent(2)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "studentManage");
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAddRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRecordActionPerformed
         // TODO add your handling code here:
-        AddRecord etp = new AddRecord(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("addRecordJPanel",etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        //((AddRecord)this.container.getComponent(12)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "addRecordJPanel");
     }//GEN-LAST:event_btnAddRecordActionPerformed
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
@@ -207,10 +207,21 @@ public class ViewStudentUpcomming extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtId1ActionPerformed
 
+    public void setUpcommingTable(List<Object[]> ol){
+        DefaultTableModel tableModel=(DefaultTableModel) upcommingRecordTable.getModel();
+        tableModel.setColumnIdentifiers(new Object[]{"Name", "Does", "Date"}); 
+        ol.forEach((e)-> {tableModel.addRow(e);});
+       upcommingRecordTable.setModel(tableModel);
+    }
+    
+    public void setPastTable(List<Object[]> ol){
+        DefaultTableModel tableModel=(DefaultTableModel) pastRecordTable.getModel();
+        tableModel.setColumnIdentifiers(new Object[]{"Name", "Does", "Date"}); 
+        ol.forEach((e)-> {tableModel.addRow(e);});
+       pastRecordTable.setModel(tableModel);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable RecordTable;
-    private javax.swing.JTable RecordTable1;
     private javax.swing.JButton btnAddRecord;
     private javax.swing.JButton btnBack;
     private javax.swing.JLabel jLabel14;
@@ -220,7 +231,9 @@ public class ViewStudentUpcomming extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable pastRecordTable;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtId1;
+    private javax.swing.JTable upcommingRecordTable;
     // End of variables declaration//GEN-END:variables
 }

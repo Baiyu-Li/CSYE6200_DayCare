@@ -4,6 +4,7 @@
  */
 package userInterface.Student;
 
+import Controller.SqliteController;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -15,14 +16,18 @@ import javax.swing.JPanel;
  */
 public class AddRecord extends javax.swing.JPanel {
 
-    JPanel rightPanel;
+    JPanel container;
     
     /**
      * Creates new form manageTeacher
      */
-    public AddRecord(JPanel rp) {
+    
+    private CardLayout clayout;
+    public AddRecord(JPanel container) {
         initComponents();     
-        rightPanel = rp;
+        this.container = container;
+        SqliteController.test();
+        clayout = (CardLayout) container.getLayout();
     }
 
     /**
@@ -127,11 +132,8 @@ public class AddRecord extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        ViewStudent etp = new ViewStudent(rightPanel);
-        rightPanel.remove(this);
-        rightPanel.add(etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.previous(rightPanel);
+        ((ManageStudent)this.container.getComponent(2)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "studentManage");
     }//GEN-LAST:event_btnBackActionPerformed
     
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed

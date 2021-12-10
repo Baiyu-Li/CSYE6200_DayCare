@@ -2,26 +2,37 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package userInterface.Classroom;
+package userInterface.Course;
 
+import Controller.MainController;
+import Controller.SqliteController;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import userInterface.Immunization.ViewStudentImmunization;
+import userInterface.Student.ManageStudent;
+import userInterface.MainFrame;
 
 /**
  *
  * @author 83715
  */
-public class ManageClassroom extends javax.swing.JPanel {
+public class ManageCourse extends javax.swing.JPanel {
 
-    JPanel rightPanel;
+    JPanel container;
     
     /**
      * Creates new form manageTeacher
      */
-    public ManageClassroom(JPanel rp) {
+    private CardLayout clayout;
+
+    public ManageCourse(JPanel container) {        
         initComponents();     
-        rightPanel = rp;
+        this.container = container;
+        SqliteController.test();
+        clayout = (CardLayout) container.getLayout();
     }
 
     /**
@@ -34,11 +45,10 @@ public class ManageClassroom extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        ClassroomTable = new javax.swing.JTable();
+        CourseTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         btnDelete = new javax.swing.JButton();
         tbnView = new javax.swing.JButton();
-        tbnEnrollTeacher = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(650, 400));
@@ -46,8 +56,8 @@ public class ManageClassroom extends javax.swing.JPanel {
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        ClassroomTable.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        ClassroomTable.setModel(new javax.swing.table.DefaultTableModel(
+        CourseTable.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        CourseTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -55,14 +65,14 @@ public class ManageClassroom extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Capacity", "AgeRange", "Teacher", "Student"
+                "ID", "Name", "Time", "Loaction", "Instructor"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -73,12 +83,12 @@ public class ManageClassroom extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(ClassroomTable);
+        jScrollPane1.setViewportView(CourseTable);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, 190));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel1.setText("Manage Classroom ");
+        jLabel1.setText("Manage Course");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, -1));
 
         btnDelete.setBackground(new java.awt.Color(255, 255, 255));
@@ -100,16 +110,6 @@ public class ManageClassroom extends javax.swing.JPanel {
             }
         });
         add(tbnView, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 110, -1));
-
-        tbnEnrollTeacher.setBackground(new java.awt.Color(255, 255, 255));
-        tbnEnrollTeacher.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tbnEnrollTeacher.setText("Create Classroom");
-        tbnEnrollTeacher.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tbnEnrollTeacherActionPerformed(evt);
-            }
-        });
-        add(tbnEnrollTeacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 350, 150, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -119,29 +119,23 @@ public class ManageClassroom extends javax.swing.JPanel {
 
     private void tbnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnViewActionPerformed
         // TODO add your handling code here:
-        ViewClassroom etp = new ViewClassroom(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("viewClassroomJPanel",etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        ((ViewCourse)this.container.getComponent(5)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "viewCourseJPanel");
     }//GEN-LAST:event_tbnViewActionPerformed
 
-    private void tbnEnrollTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnEnrollTeacherActionPerformed
-        // TODO add your handling code here:
-        EnrollClassroom etp = new EnrollClassroom(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("createClassroomJPanel",etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
-    }//GEN-LAST:event_tbnEnrollTeacherActionPerformed
-
+    //import value from database
+    public void setTable(List<Object[]> ol){
+        DefaultTableModel tableModel=(DefaultTableModel) CourseTable.getModel();
+        tableModel.setColumnIdentifiers(new Object[]{"ID", "Name", "Time", "Location", "Instructor"}); 
+        ol.forEach((e)-> {tableModel.addRow(e);});
+       CourseTable.setModel(tableModel);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable ClassroomTable;
+    private javax.swing.JTable CourseTable;
     private javax.swing.JButton btnDelete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton tbnEnrollTeacher;
     private javax.swing.JButton tbnView;
     // End of variables declaration//GEN-END:variables
 }

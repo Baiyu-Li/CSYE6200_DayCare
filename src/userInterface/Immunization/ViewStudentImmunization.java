@@ -4,6 +4,7 @@
  */
 package userInterface.Immunization;
 
+import Controller.SqliteController;
 import userInterface.Student.*;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
@@ -11,6 +12,7 @@ import java.awt.Component;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import userInterface.Course.ViewCourse;
 
 /**
  *
@@ -18,14 +20,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ViewStudentImmunization extends javax.swing.JPanel {
 
-    JPanel rightPanel;
+    JPanel container;
     
     /**
      * Creates new form manageTeacher
      */
-    public ViewStudentImmunization(JPanel rp) {
+    private CardLayout clayout;
+    public ViewStudentImmunization(JPanel container) {
         initComponents();     
-        rightPanel = rp;
+        this.container = container;
+        SqliteController.test();
+        clayout = (CardLayout) container.getLayout();
     }
 
     /**
@@ -166,25 +171,16 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
     
     private void tbnView1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnView1ActionPerformed
         // TODO add your handling code here:
-        ViewStudent etp = new ViewStudent(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("viewStudentJPanel",etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        //((ViewStudent)this.container.getComponent(7)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "viewStudentJPanel");
     }//GEN-LAST:event_tbnView1ActionPerformed
 
     private void tbnVacanciesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnVacanciesActionPerformed
         // TODO add your handling code here:
-        ViewStudentRecord etp = new ViewStudentRecord(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("viewStudentRecordJPanel",etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        ((ViewStudentRecord)this.container.getComponent(6)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "viewStudentRecordJPanel");
     }//GEN-LAST:event_tbnVacanciesActionPerformed
 
-    private void backAction(){
-        
-    }
     //import value from database
     public void setTableUpcoming(List<Object[]> ol){
         DefaultTableModel tableModel=(DefaultTableModel) RecordTable.getModel();

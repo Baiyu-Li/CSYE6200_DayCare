@@ -140,7 +140,8 @@ public class SqliteController {
         //String dsql="drop table if exists Course";
         String sql="create table IF NOT EXISTS Course (CourseID INTEGER PRIMARY KEY,"
                 + "CourseName VARCHAR(200),StartDate DATE,EndDate DATE,DayOfWeek VARCHAR(15),StartTime TIME,"
-                + "EndTime TIME,Location VARCHAR(200),SubjectID INTEGER REFERENCES Subject(SubjectID),tid INT REFERENCES person(id)) ";
+                + "EndTime TIME,Location VARCHAR(200),SubjectID INTEGER REFERENCES Subject(SubjectID),tid INT REFERENCES person(id)"
+                + ") ";
         try{
             //stmt.executeUpdate(dsql);
             stmt.execute(sql);

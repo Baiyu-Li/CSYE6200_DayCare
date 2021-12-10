@@ -4,10 +4,7 @@
  */
 package userInterface.Teacher;
 
-import userInterface.Classroom.*;
-import userInterface.Teacher.*;
 import java.awt.CardLayout;
-import java.awt.Component;
 import javax.swing.JPanel;
 
 /**

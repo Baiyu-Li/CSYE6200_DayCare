@@ -4,10 +4,13 @@
  */
 package userInterface.Student;
 
+import Controller.SqliteController;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,14 +18,17 @@ import javax.swing.JPanel;
  */
 public class ViewStudentRecord extends javax.swing.JPanel {
 
-    JPanel rightPanel;
+    JPanel container;
     
     /**
      * Creates new form manageTeacher
      */
-    public ViewStudentRecord(JPanel rp) {
+    private CardLayout clayout;
+    public ViewStudentRecord(JPanel container) {
         initComponents();     
-        rightPanel = rp;
+        this.container = container;
+        SqliteController.test();
+        clayout = (CardLayout) container.getLayout();
     }
 
     /**
@@ -144,20 +150,14 @@ public class ViewStudentRecord extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        ViewStudent etp = new ViewStudent(rightPanel);
-        rightPanel.remove(this);
-        rightPanel.add(etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.previous(rightPanel);
+        ((ManageStudent)this.container.getComponent(2)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "studentManage");
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAddRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRecordActionPerformed
         // TODO add your handling code here:
-        AddRecord etp = new AddRecord(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("addRecordJPanel",etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        //((AddRecord)this.container.getComponent(12)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "addRecordJPanel");
     }//GEN-LAST:event_btnAddRecordActionPerformed
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
@@ -170,13 +170,17 @@ public class ViewStudentRecord extends javax.swing.JPanel {
 
     private void btnTrack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrack1ActionPerformed
         // TODO add your handling code here:
-        ViewStudentUpcomming etp = new ViewStudentUpcomming(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("viewStudentUpcommingJPanel",etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        ((ViewStudentUpcomming)this.container.getComponent(11)).setUpcommingTable(SqliteController.getAllTeacher());
+        ((ViewStudentUpcomming)this.container.getComponent(11)).setPastTable(SqliteController.getAllTeacher());
+        clayout.show(container, "viewStudentUpcommingJPanel");
     }//GEN-LAST:event_btnTrack1ActionPerformed
 
+    public void setTable(List<Object[]> ol){
+        DefaultTableModel tableModel=(DefaultTableModel) RecordTable.getModel();
+        tableModel.setColumnIdentifiers(new Object[]{"Name", "Does", "Date", "NextDoes"}); 
+        ol.forEach((e)-> {tableModel.addRow(e);});
+       RecordTable.setModel(tableModel);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable RecordTable;
