@@ -24,12 +24,19 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    private CardLayout clayout;
     public MainFrame() {
         initComponents();
         
-        CardLayout clayout=(CardLayout)container.getLayout();
+        clayout=(CardLayout)container.getLayout();
+        //add jpanel to container
         ManageTeacher mtp = new ManageTeacher(container);
+        ManageStudent mtp1 = new ManageStudent(container);
+        ViewStudentImmunization mtp2 = new ViewStudentImmunization(container);
+        //ManageClassroom mtp2 = new ManageClassroom(container);
         container.add("teacherManage", mtp);
+        container.add("studentManage", mtp1);
+        container.add("immunizationManage", mtp2);
         MainController mc=new MainController(this,container);
         SqliteController.test();
         this.teacherShow(e-> clayout.show(container, "teacherManage"));
@@ -129,21 +136,20 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void immunizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_immunizationActionPerformed
-        // TODO add your handling code here:
-        ViewStudentImmunization mtp = new ViewStudentImmunization(container);
-        container.removeAll();
-        container.add(mtp);
-        pack();
+        ((ViewStudentImmunization)this.container.getComponent(3)).setTableUpcoming(SqliteController.getAllTeacher());
+        //container layout show() display panel with name
+        clayout.show(container, "immunizationManage");
+        
     }//GEN-LAST:event_immunizationActionPerformed
     public void teacherShow(ActionListener actionListener) {
         teacher.addActionListener(actionListener);
     }
     private void studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentActionPerformed
-        // TODO add your handling code here:
-        ManageStudent mtp = new ManageStudent(container);
-        container.removeAll();
-        container.add(mtp);
-        pack();
+        ((ManageStudent)this.container.getComponent(2)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "studentManage");
+        //container.removeAll();
+        //container.add(mtp);
+        //pack();
         /*
         rightPanel.removeAll();
         rightPanel.add("ManageStudentJPanel",mtp);
@@ -154,10 +160,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void classroomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classroomActionPerformed
         // TODO add your handling code here:
-        ManageClassroom mtp = new ManageClassroom(container);
-        container.removeAll();
-        container.add(mtp);
-        pack();
+        
+        //container.removeAll();
+        //container.add(mtp);
+        //pack();
         /*
         rightPanel.removeAll();
         rightPanel.add("ManageClassroomJPanel",mtp);
