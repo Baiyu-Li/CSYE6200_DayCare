@@ -199,20 +199,14 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_studentActionPerformed
 
     private void courseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseActionPerformed
-        // TODO add your handling code here:
-
-        ((ManageCourse)this.container.getComponent(4)).setTable(SqliteController.getAllTeacher());
+        CourseController cc=new CourseController(container);
+        if(CourseController.clist.isEmpty()){
+            cc.showCourseTabelfromDB();
+        }else{
+            cc.showCoursewithList();
+        }
         clayout.show(container, "courseManage");
 
-        //container.removeAll();
-        //container.add(mtp);
-        //pack();
-        /*
-        rightPanel.removeAll();
-        rightPanel.add("ManageClassroomJPanel",mtp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
-        */
     }//GEN-LAST:event_courseActionPerformed
 
     private void registrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationActionPerformed
