@@ -35,12 +35,14 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public CardLayout clayout;
+
     public MainFrame() {
         initComponents();
         
         clayout=(CardLayout)container.getLayout();
         //add jpanel to container
         ManageTeacher mtp = new ManageTeacher(container);
+
         ManageStudent msp = new ManageStudent(container);
         ViewStudentImmunization mip = new ViewStudentImmunization(container);
         ManageCourse mcp = new ManageCourse(container);
@@ -198,8 +200,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void courseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseActionPerformed
         // TODO add your handling code here:
+
         ((ManageCourse)this.container.getComponent(4)).setTable(SqliteController.getAllTeacher());
         clayout.show(container, "courseManage");
+
         //container.removeAll();
         //container.add(mtp);
         //pack();
