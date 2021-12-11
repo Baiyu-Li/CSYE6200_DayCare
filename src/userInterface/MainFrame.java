@@ -14,6 +14,7 @@ import userInterface.Course.AssignStudent;
 import userInterface.Course.EnrollCourse;
 import userInterface.Course.ManageCourse;
 import userInterface.Course.ViewCourse;
+import userInterface.Immunization.ManageStudentImmunization;
 import userInterface.Immunization.ViewStudentImmunization;
 import userInterface.Registration.AnnualRegistration;
 import userInterface.Registration.StudentAnnualRegistration;
@@ -47,7 +48,11 @@ public class MainFrame extends javax.swing.JFrame {
         ManageTeacher mtp = new ManageTeacher(container);
 
         ManageStudent msp = new ManageStudent(container);
-        ViewStudentImmunization mip = new ViewStudentImmunization(container);
+        
+        //Immunization
+        ManageStudentImmunization msi = new ManageStudentImmunization(container);
+//        ViewStudentImmunization vsi = new ViewStudentImmunization(container);
+        
         ManageCourse mcp = new ManageCourse(container);
         ViewCourse vcp = new ViewCourse(container);
         ViewStudentRecord srp = new ViewStudentRecord(container);
@@ -64,7 +69,7 @@ public class MainFrame extends javax.swing.JFrame {
                         
         container.add("teacherManage", mtp);//1
         container.add("studentManage", msp);//2
-        container.add("immunizationManage", mip);//3
+        container.add("immunizationManage", msi);//3
         container.add("courseManage", mcp);//4
         container.add("viewCourseJPanel",vcp);//5
         container.add("viewStudentRecordJPanel",srp);//6
@@ -78,6 +83,8 @@ public class MainFrame extends javax.swing.JFrame {
         container.add("enrollTeacherJPanel",etp);//14
         container.add("enrollCourseJPanel",ecp);//15
         container.add("assignStudentJPanel",asp);//16
+        container.add("manageStudentImmunizationJPanel",msi);//17
+//        container.add("viewStudentImmunizationJPanel",vsi);//17
 
         MainController mc=new MainController(this,container);
         SqliteController.test();
@@ -183,9 +190,12 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void immunizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_immunizationActionPerformed
-        ((ViewStudentImmunization)this.container.getComponent(3)).setTableUpcoming(SqliteController.getAllTeacher());
-        //container layout show() display panel with name
-        clayout.show(container, "immunizationManage");
+//        ((ViewStudentImmunization_old)this.container.getComponent(3)).setTableUpcoming(SqliteController.getAllTeacher());
+//        //container layout show() display panel with name
+//        clayout.show(container, "immunizationManage");
+        
+        ((ManageStudentImmunization)this.container.getComponent(16)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "manageStudentImmunizationJPanel");
         
     }//GEN-LAST:event_immunizationActionPerformed
     public void teacherShow(ActionListener actionListener) {

@@ -10,27 +10,36 @@ import userInterface.Teacher.*;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import userInterface.Course.ViewCourse;
 
 /**
  *
- * @author 83715
+ * @author Floyed
  */
 public class ViewStudentImmunization extends javax.swing.JPanel {
 
     JPanel container;
     
+    String currentStudentName;
+    
+    int updateRow = -1;
+    
     /**
      * Creates new form manageTeacher
      */
     private CardLayout clayout;
-    public ViewStudentImmunization(JPanel container) {
+    public ViewStudentImmunization(JPanel container, String currentStudentName) {
         initComponents();     
         this.container = container;
         SqliteController.test();
         clayout = (CardLayout) container.getLayout();
+        this.currentStudentName = currentStudentName;
+        updateRowButton.setVisible(false);
+        jLabel7.setText("Manage Immunization records for: "+currentStudentName);
+
     }
 
     /**
@@ -43,72 +52,19 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel7 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        RecordTable = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         RecordTable2 = new javax.swing.JTable();
         tbnView1 = new javax.swing.JButton();
-        tbnVacancies = new javax.swing.JButton();
+        updateRowButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(650, 400));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel7.setText("Immunization Reminder");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
+        jLabel7.setText("Immunization Records for student: ");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
 
-        RecordTable.setBackground(new java.awt.Color(255, 102, 102));
-        RecordTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "StudentName", "VaccineName", "Dose", "Past Date"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(RecordTable);
-        if (RecordTable.getColumnModel().getColumnCount() > 0) {
-            RecordTable.getColumnModel().getColumn(0).setResizable(false);
-            RecordTable.getColumnModel().getColumn(1).setResizable(false);
-            RecordTable.getColumnModel().getColumn(2).setResizable(false);
-            RecordTable.getColumnModel().getColumn(3).setResizable(false);
-            RecordTable.getColumnModel().getColumn(4).setResizable(false);
-        }
-
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 470, 100));
-
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(156, 219, 155));
-        jLabel2.setText("Upcomming");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 102, 102));
-        jLabel3.setText("Past Due");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
-
-        RecordTable2.setBackground(new java.awt.Color(156, 219, 155));
         RecordTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -117,11 +73,11 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "StudentName", "VaccineName", "Dose", "Comming Date"
+                "Vaccine name", "Completed doses", "Required Doses", "Previous dose Date", "Past due date?"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -148,23 +104,21 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
 
         tbnView1.setBackground(new java.awt.Color(255, 255, 255));
         tbnView1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tbnView1.setText("View Detail");
+        tbnView1.setText("Update Vaccine info");
         tbnView1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbnView1ActionPerformed(evt);
             }
         });
-        add(tbnView1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 360, 110, -1));
+        add(tbnView1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, -1, -1));
 
-        tbnVacancies.setBackground(new java.awt.Color(255, 255, 255));
-        tbnVacancies.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tbnVacancies.setText("View Records");
-        tbnVacancies.addActionListener(new java.awt.event.ActionListener() {
+        updateRowButton.setText("Update");
+        updateRowButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tbnVacanciesActionPerformed(evt);
+                updateRowButtonActionPerformed(evt);
             }
         });
-        add(tbnVacancies, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 360, 120, -1));
+        add(updateRowButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -172,33 +126,58 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
     private void tbnView1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnView1ActionPerformed
         // TODO add your handling code here:
         //((ViewStudent)this.container.getComponent(7)).setTable(SqliteController.getAllTeacher());
-        clayout.show(container, "viewStudentJPanel");
+        
+        ManageStudentImmunization msi = new ManageStudentImmunization(container);
+        
+        clayout.addLayoutComponent(msi, container);
+        
+        
+        if(!RecordTable2.getSelectionModel().isSelectionEmpty()){
+            int row=RecordTable2.getSelectedRow();
+            Object o=RecordTable2.getModel().getValueAt(row, 1);
+            
+            RecordTable2.setEditingRow(row);
+            
+            updateRow = row;
+            
+            updateRowButton.setVisible(true);
+            
+            if(o !=null){
+                int sid=Integer.parseInt(o.toString());
+                String name=o.toString();
+
+                ViewStudentImmunization vsi = new ViewStudentImmunization(container, name);
+
+                clayout.show(container, "viewStudentImmunizationJPanel");
+                
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select a Vaccine record");
+        }
+        
     }//GEN-LAST:event_tbnView1ActionPerformed
 
-    private void tbnVacanciesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnVacanciesActionPerformed
+    private void updateRowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateRowButtonActionPerformed
         // TODO add your handling code here:
-        ((ViewStudentRecord)this.container.getComponent(6)).setTable(SqliteController.getAllTeacher());
-        clayout.show(container, "viewStudentRecordJPanel");
-    }//GEN-LAST:event_tbnVacanciesActionPerformed
+        
+                updateRowButton.setVisible(false);
+        
+    }//GEN-LAST:event_updateRowButtonActionPerformed
 
     //import value from database
     public void setTableUpcoming(List<Object[]> ol){
-        DefaultTableModel tableModel=(DefaultTableModel) RecordTable.getModel();
+        DefaultTableModel tableModel=(DefaultTableModel) RecordTable2.getModel();
         tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Group"});
         //tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "VaccineName","LastVacccinedDate","DoesCompleted"}); 
         ol.forEach((e)-> {tableModel.addRow(e);});
-       RecordTable.setModel(tableModel);
+       RecordTable2.setModel(tableModel);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable RecordTable;
     private javax.swing.JTable RecordTable2;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JButton tbnVacancies;
     private javax.swing.JButton tbnView1;
+    private javax.swing.JButton updateRowButton;
     // End of variables declaration//GEN-END:variables
 }
