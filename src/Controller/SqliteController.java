@@ -5,6 +5,8 @@
  */
 package Controller;
 
+import Model.Organization.Course;
+import Model.Organization.Subject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
     
 /**
  *
@@ -224,6 +227,23 @@ public class SqliteController {
     		closeDB();
     	}
     }
+    //insert into Subject table
+    public static void insertSubjectfactoryTable(Subject s){
+        connDB();
+        
+        String sql="INSERT INTO Subject VALUES (?,?)";
+        try{
+            pstm=conn.prepareStatement(sql);
+            pstm.setInt(1, s.getSubjectID());
+            pstm.setString(2, s.getSubjectName());
+            pstm.executeUpdate();
+            //stmt.executeUpdate(sql);
+        }catch(SQLException e){
+    		e.printStackTrace();
+    	}finally{
+    		closeDB();
+    	}
+    }
     //insert into Course table
     public static void insertCourseTable(int cid,String cName,String sd,String ed,
             String st,String et,String wod,String loc,int sid,int tid){
@@ -250,22 +270,49 @@ public class SqliteController {
     		closeDB();
     	}
     }
-    //insert into CourseEnroll table
-    public static void insertCourseEnrollTable(int cid,int sid){
+    //insert into Course table
+    public static int insertCourseFactoryTable(Course c){
         connDB();
-        
-        String sql="INSERT INTO CourseEnroll VALUES (?,?)";
+        int i=0;
+        String sql="INSERT INTO Course VALUES (?,?,?,?,?,?,?,?,?,?)";
         try{
             pstm=conn.prepareStatement(sql);
-            pstm.setInt(1, cid);
-            pstm.setInt(2, sid);
-            pstm.executeUpdate();
+            pstm.setInt(1, c.getCourseId());
+            pstm.setString(2, c.getCourseName());
+            pstm.setString(3, c.getStartDate());
+            pstm.setString(4, c.getEndDate());
+            pstm.setString(5, c.getWeekOfDay());
+            pstm.setString(6, c.getStartTime());
+            pstm.setString(7, c.getEndTime());
+            pstm.setString(8, c.getLocation());
+            pstm.setInt(9, c.getSubjectID());
+            pstm.setInt(10, c.getteacherID());
+            i=pstm.executeUpdate();
             //stmt.executeUpdate(sql);
         }catch(SQLException e){
     		e.printStackTrace();
     	}finally{
     		closeDB();
     	}
+        return i;
+    }
+    //insert into CourseEnroll table
+    public static int insertCourseEnrollTable(int cid,int sid){
+        connDB();
+        int i=0;
+        String sql="INSERT INTO CourseEnroll VALUES (?,?)";
+        try{
+            pstm=conn.prepareStatement(sql);
+            pstm.setInt(1, cid);
+            pstm.setInt(2, sid);
+            i=pstm.executeUpdate();
+            //stmt.executeUpdate(sql);
+        }catch(SQLException e){
+    		e.printStackTrace();
+    	}finally{
+    		closeDB();
+    	}
+        return i;
     }
     //get all course info from DB
     public static List<Object[]> getAllCourse(){
@@ -366,19 +413,51 @@ public class SqliteController {
     	}
         return ol;
     }
-    public static void deleteEnrollStudent(int cid,int sid){
+    public static int  deleteEnrollStudent(int cid,int sid){
         connDB();
+        int i=0;
         String sql="DELETE FROM CourseEnrollment WHERE CourseID = ? AND sid = ?";
         try{
             pstm=conn.prepareStatement(sql);
             pstm.setInt(1, cid);
             pstm.setInt(2, sid);
-            pstm.executeUpdate();
+            i=pstm.executeUpdate();
+        }catch(SQLException e){
+    		JOptionPane.showMessageDialog(null, "Failed to delete");
+    	}finally{
+    		closeDB();
+    	}
+        return i;
+    }
+    public static int deleteCourseRow(int cid){
+        connDB();
+        int i=0;
+        String sql="DELETE FROM Course WHERE CourseID = ?";
+        try{
+            pstm=conn.prepareStatement(sql);
+            pstm.setInt(1, cid);
+            i=pstm.executeUpdate();
         }catch(SQLException e){
     		e.printStackTrace();
     	}finally{
     		closeDB();
     	}
+        return i;
+    }
+    public static int  deleteCourseEnrollRow(int cid){
+        connDB();
+        int i=0;
+        String sql="DELETE FROM CourseEnrollment WHERE CourseID = ?";
+        try{
+            pstm=conn.prepareStatement(sql);
+            pstm.setInt(1, cid);
+            i=pstm.executeUpdate();
+        }catch(SQLException e){
+    		e.printStackTrace();
+    	}finally{
+    		closeDB();
+    	}
+        return i;
     }
     
 }

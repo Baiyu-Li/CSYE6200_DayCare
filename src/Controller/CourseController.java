@@ -22,14 +22,12 @@ import userInterface.Course.ViewCourse;
 public class CourseController {
     private JPanel container;
     private AbstractFactory cf;
-    private AbstractFactory sf;
     public static List<Object[]> clist=new ArrayList<>();
     public static List<Object[]> cEnrolllist=new ArrayList<>();
     
     public CourseController(JPanel container){
         this.container=container;
         cf=new CourseFactory();
-        sf=new SubjectFactory();
     }
     
     public void showCourseTabelfromDB(){
@@ -47,7 +45,24 @@ public class CourseController {
         ((ViewCourse)this.container.getComponent(5)).setTable(cEnrolllist);
     }
     public void removeEnrollStudent(int cid,int sid){
-        SqliteController.deleteEnrollStudent(cid, sid);
-        showCourseTabelfromDB();
+        if(SqliteController.deleteEnrollStudent(cid, sid)>0){
+            viewCourseEnrollDetailfromDB(cid);
+        }
+        
+    }
+    public void removeCourse(int cid){
+        if(SqliteController.deleteCourseEnrollRow(cid)>0){
+            if(SqliteController.deleteCourseRow(cid)>0){
+                showCourseTabelfromDB();
+            }
+        }
+    }
+    
+    public int addnewCourseStudent(int cid, int sid){
+        return SqliteController.insertCourseEnrollTable(cid, sid);
+    }
+    
+    public int addnewCourse(String s){
+        return SqliteController.insertCourseFactoryTable((Course)(cf.getObject(s)));
     }
 }
