@@ -35,14 +35,14 @@ public class CourseController {
         showCoursewithList();
     }
     public void showCoursewithList(){
-        ((ManageCourse)this.container.getComponent(4)).setTable(clist);
+        ((ManageCourse)this.container.getComponent(3)).setTable(clist);
     }
     public void viewCourseEnrollDetailfromDB(int cid){
         cEnrolllist=SqliteController.getCourseEnrollStudent(cid);
         viewCourseEnrollDetail();
     }
     public void viewCourseEnrollDetail(){
-        ((ViewCourse)this.container.getComponent(5)).setTable(cEnrolllist);
+        ((ViewCourse)this.container.getComponent(4)).setTable(cEnrolllist);
     }
     public void removeEnrollStudent(int cid,int sid){
         if(SqliteController.deleteEnrollStudent(cid, sid)>0){
