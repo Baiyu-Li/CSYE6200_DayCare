@@ -4,9 +4,11 @@
  */
 package userInterface.Teacher;
 
+import Controller.SqliteController;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JPanel;
+import userInterface.Student.ManageStudent;
 
 /**
  *
@@ -14,16 +16,18 @@ import javax.swing.JPanel;
  */
 public class EnrollTeacher extends javax.swing.JPanel {
 
-    JPanel rightPanel;
+    JPanel container;
     
     /**
      * Creates new form manageTeacher
      */
-    public EnrollTeacher(JPanel rp) {
+    private CardLayout clayout;
+    public EnrollTeacher(JPanel container) {
         initComponents();     
-        rightPanel = rp;
+        this.container = container;
+        SqliteController.test();
+        clayout = (CardLayout) container.getLayout();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -141,11 +145,8 @@ public class EnrollTeacher extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        ManageTeacher etp = new ManageTeacher(rightPanel);
-        rightPanel.remove(this);
-        rightPanel.add(etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.previous(rightPanel);
+        ((ManageTeacher)this.container.getComponent(1)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "teacherManage");
     }//GEN-LAST:event_btnBackActionPerformed
   
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed

@@ -4,12 +4,29 @@
  */
 package userInterface;
 
+
+import Controller.CourseController;
+import Controller.MainController;
+import Controller.SqliteController;
 import java.awt.CardLayout;
-import userInterface.Classroom.ManageClassroom;
+import java.awt.event.ActionListener;
+import userInterface.Course.AssignStudent;
+import userInterface.Course.EnrollCourse;
+import userInterface.Course.ManageCourse;
+import userInterface.Course.ViewCourse;
 import userInterface.Immunization.ViewStudentImmunization;
 import userInterface.Registration.AnnualRegistration;
+import userInterface.Registration.StudentAnnualRegistration;
+import userInterface.Registration.TeacherAnnualRegistration;
+import userInterface.Student.AddRecord;
+import userInterface.Student.EnrollStudent;
 import userInterface.Student.ManageStudent;
+import userInterface.Student.ViewStudent;
+import userInterface.Student.ViewStudentRecord;
+import userInterface.Student.ViewStudentUpcomming;
+import userInterface.Teacher.EnrollTeacher;
 import userInterface.Teacher.ManageTeacher;
+import userInterface.Teacher.ViewTeacher;
 
 /**
  *
@@ -20,8 +37,51 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    public CardLayout clayout;
+
     public MainFrame() {
         initComponents();
+        
+        clayout=(CardLayout)container.getLayout();
+        //add jpanel to container
+        ManageTeacher mtp = new ManageTeacher(container);
+
+        ManageStudent msp = new ManageStudent(container);
+        ViewStudentImmunization mip = new ViewStudentImmunization(container);
+        ManageCourse mcp = new ManageCourse(container);
+        ViewCourse vcp = new ViewCourse(container);
+        ViewStudentRecord srp = new ViewStudentRecord(container);
+        ViewStudent vsp = new ViewStudent(container);
+        TeacherAnnualRegistration tap = new TeacherAnnualRegistration(container);
+        StudentAnnualRegistration sap = new StudentAnnualRegistration(container);
+        EnrollStudent esp = new EnrollStudent(container);
+        ViewStudentUpcomming sup = new ViewStudentUpcomming(container);
+        AddRecord arp = new AddRecord(container);
+        ViewTeacher vtp = new ViewTeacher(container);
+        EnrollTeacher etp = new EnrollTeacher(container);
+        EnrollCourse ecp = new EnrollCourse(container);
+        AssignStudent asp = new AssignStudent(container);
+                        
+        container.add("teacherManage", mtp);//1
+        container.add("studentManage", msp);//2
+        container.add("immunizationManage", mip);//3
+        container.add("courseManage", mcp);//4
+        container.add("viewCourseJPanel",vcp);//5
+        container.add("viewStudentRecordJPanel",srp);//6
+        container.add("viewStudentJPanel",vsp);//7
+        container.add("TeacherAnnualRegistrationJPanel",tap);//8
+        container.add("StudentAnnualRegistrationJPanel",sap);//9
+        container.add("enrollStudentJPanel",esp);//10
+        container.add("viewStudentUpcommingJPanel",sup);//11
+        container.add("addRecordJPanel",arp);//12
+        container.add("viewTeacherJPanel",vtp);//13
+        container.add("enrollTeacherJPanel",etp);//14
+        container.add("enrollCourseJPanel",ecp);//15
+        container.add("assignStudentJPanel",asp);//16
+
+        MainController mc=new MainController(this,container);
+        SqliteController.test();
+        this.teacherShow(e-> clayout.show(container, "teacherManage"));
     }
 
     /**
@@ -41,7 +101,7 @@ public class MainFrame extends javax.swing.JFrame {
         immunization = new javax.swing.JButton();
         teacher = new javax.swing.JButton();
         student = new javax.swing.JButton();
-        classroom = new javax.swing.JButton();
+        course = new javax.swing.JButton();
         registration = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -97,15 +157,15 @@ public class MainFrame extends javax.swing.JFrame {
         });
         workPanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 110, -1));
 
-        classroom.setBackground(new java.awt.Color(255, 255, 255));
-        classroom.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        classroom.setText("Classroom");
-        classroom.addActionListener(new java.awt.event.ActionListener() {
+        course.setBackground(new java.awt.Color(255, 255, 255));
+        course.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        course.setText("Course");
+        course.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                classroomActionPerformed(evt);
+                courseActionPerformed(evt);
             }
         });
-        workPanel.add(classroom, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 110, -1));
+        workPanel.add(course, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 110, -1));
 
         registration.setBackground(new java.awt.Color(255, 255, 255));
         registration.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -123,31 +183,20 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void immunizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_immunizationActionPerformed
-        // TODO add your handling code here:
-        ViewStudentImmunization mtp = new ViewStudentImmunization(container);
-        container.removeAll();
-        container.add(mtp);
-        pack();
+        ((ViewStudentImmunization)this.container.getComponent(3)).setTableUpcoming(SqliteController.getAllTeacher());
+        //container layout show() display panel with name
+        clayout.show(container, "immunizationManage");
+        
     }//GEN-LAST:event_immunizationActionPerformed
-
-    private void teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacherActionPerformed
-        // TODO add your handling code here:
-        ManageTeacher mtp = new ManageTeacher(container);
-        container.removeAll();
-        container.add(mtp);
-        pack();
-        ///rightPanel.removeAll();
-        //rightPanel.add("ManageTeacherJPanel",mtp);
-        //CardLayout layout = (CardLayout) rightPanel.getLayout();
-        //layout.last(rightPanel);
-    }//GEN-LAST:event_teacherActionPerformed
-
+    public void teacherShow(ActionListener actionListener) {
+        teacher.addActionListener(actionListener);
+    }
     private void studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentActionPerformed
-        // TODO add your handling code here:
-        ManageStudent mtp = new ManageStudent(container);
-        container.removeAll();
-        container.add(mtp);
-        pack();
+        ((ManageStudent)this.container.getComponent(2)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "studentManage");
+        //container.removeAll();
+        //container.add(mtp);
+        //pack();
         /*
         rightPanel.removeAll();
         rightPanel.add("ManageStudentJPanel",mtp);
@@ -156,26 +205,23 @@ public class MainFrame extends javax.swing.JFrame {
         */
     }//GEN-LAST:event_studentActionPerformed
 
-    private void classroomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classroomActionPerformed
-        // TODO add your handling code here:
-        ManageClassroom mtp = new ManageClassroom(container);
-        container.removeAll();
-        container.add(mtp);
-        pack();
-        /*
-        rightPanel.removeAll();
-        rightPanel.add("ManageClassroomJPanel",mtp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
-        */
-    }//GEN-LAST:event_classroomActionPerformed
+    private void courseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseActionPerformed
+        CourseController cc=new CourseController(container);
+        if(CourseController.clist.isEmpty()){
+            cc.showCourseTabelfromDB();
+        }else{
+            cc.showCoursewithList();
+        }
+        clayout.show(container, "courseManage");
+
+    }//GEN-LAST:event_courseActionPerformed
 
     private void registrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationActionPerformed
         // TODO add your handling code here:
-        AnnualRegistration mtp = new AnnualRegistration(container);
+        /*AnnualRegistration mtp = new AnnualRegistration(container);
         container.removeAll();
         container.add(mtp);
-        pack();
+        pack();*/
         /*
         rightPanel.removeAll();
         rightPanel.add("AnnualRegistrationJPanel",mtp);
@@ -183,6 +229,10 @@ public class MainFrame extends javax.swing.JFrame {
         layout.last(rightPanel);
         */
     }//GEN-LAST:event_registrationActionPerformed
+
+    private void teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacherActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_teacherActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,8 +270,8 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton classroom;
     private javax.swing.JPanel container;
+    private javax.swing.JButton course;
     private javax.swing.JButton immunization;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel logoPanel;

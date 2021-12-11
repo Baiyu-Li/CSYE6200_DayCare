@@ -4,9 +4,8 @@
  */
 package userInterface.Student;
 
-import userInterface.Teacher.*;
+import Controller.SqliteController;
 import java.awt.CardLayout;
-import java.awt.Component;
 import javax.swing.JPanel;
 
 /**
@@ -15,14 +14,18 @@ import javax.swing.JPanel;
  */
 public class ViewStudent extends javax.swing.JPanel {
 
-    JPanel rightPanel;
+    JPanel container;
     
     /**
      * Creates new form manageTeacher
      */
-    public ViewStudent(JPanel rp) {
+    
+    private CardLayout clayout;
+    public ViewStudent(JPanel container) {
         initComponents();     
-        rightPanel = rp;
+        this.container = container;
+        SqliteController.test();
+        clayout = (CardLayout) container.getLayout();
     }
 
     /**
@@ -256,11 +259,8 @@ public class ViewStudent extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        ManageStudent etp = new ManageStudent(rightPanel);
-        rightPanel.remove(this);
-        rightPanel.add(etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.previous(rightPanel);
+        ((ManageStudent)this.container.getComponent(2)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "studentManage");
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -320,11 +320,8 @@ public class ViewStudent extends javax.swing.JPanel {
 
     private void tbnVacanciesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnVacanciesActionPerformed
         // TODO add your handling code here:
-        ViewStudentRecord etp = new ViewStudentRecord(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("viewStudentRecordJPanel",etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        ((ViewStudentRecord)this.container.getComponent(6)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "viewStudentRecordJPanel");
     }//GEN-LAST:event_tbnVacanciesActionPerformed
 
 

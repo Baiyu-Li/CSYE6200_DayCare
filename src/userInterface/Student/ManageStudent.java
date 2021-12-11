@@ -4,9 +4,12 @@
  */
 package userInterface.Student;
 
+import Controller.SqliteController;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,14 +17,17 @@ import javax.swing.JPanel;
  */
 public class ManageStudent extends javax.swing.JPanel {
 
-    JPanel rightPanel;
+    JPanel container;
     
     /**
      * Creates new form manageTeacher
      */
-    public ManageStudent(JPanel rp) {
+    private CardLayout clayout;
+    public ManageStudent(JPanel container) {
         initComponents();     
-        rightPanel = rp;
+        this.container = container;
+        SqliteController.test();
+        clayout = (CardLayout) container.getLayout();
     }
 
     /**
@@ -141,35 +147,33 @@ public class ManageStudent extends javax.swing.JPanel {
 
     private void tbnVacanciesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnVacanciesActionPerformed
         // TODO add your handling code here:
-        ViewStudentRecord etp = new ViewStudentRecord(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("viewStudentRecordJPanel",etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        ((ViewStudentRecord)this.container.getComponent(6)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "viewStudentRecordJPanel");
     }//GEN-LAST:event_tbnVacanciesActionPerformed
 
     private void tbnEnrollStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnEnrollStudentActionPerformed
         // TODO add your handling code here:
-        EnrollStudent esp = new EnrollStudent(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("enrollStudentJPanel",esp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        //((EnrollStudent)this.container.getComponent(10)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "enrollStudentJPanel");
     }//GEN-LAST:event_tbnEnrollStudentActionPerformed
 
     private void tbnView1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnView1ActionPerformed
         // TODO add your handling code here:
-        ViewStudent etp = new ViewStudent(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("viewStudentJPanel",etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        //((ViewStudent)this.container.getComponent(7)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "viewStudentJPanel");
     }//GEN-LAST:event_tbnView1ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
-
+    
+    //import value from database
+    public void setTable(List<Object[]> ol){
+        DefaultTableModel tableModel=(DefaultTableModel) StudentTable.getModel();
+        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Subject"}); 
+        ol.forEach((e)-> {tableModel.addRow(e);});
+       StudentTable.setModel(tableModel);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable StudentTable;

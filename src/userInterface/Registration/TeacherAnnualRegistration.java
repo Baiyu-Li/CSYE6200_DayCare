@@ -8,7 +8,9 @@ import userInterface.Student.*;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -40,9 +42,9 @@ public class TeacherAnnualRegistration extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TeacherTable = new javax.swing.JTable();
+        pastTeacherTable = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        TeacherTable1 = new javax.swing.JTable();
+        renewedTeacherTable = new javax.swing.JTable();
         btnBack1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -75,9 +77,9 @@ public class TeacherAnnualRegistration extends javax.swing.JPanel {
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        TeacherTable.setBackground(new java.awt.Color(255, 102, 102));
-        TeacherTable.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        TeacherTable.setModel(new javax.swing.table.DefaultTableModel(
+        pastTeacherTable.setBackground(new java.awt.Color(255, 102, 102));
+        pastTeacherTable.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        pastTeacherTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -103,15 +105,15 @@ public class TeacherAnnualRegistration extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(TeacherTable);
+        jScrollPane1.setViewportView(pastTeacherTable);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 490, 100));
 
         jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
 
-        TeacherTable1.setBackground(new java.awt.Color(156, 219, 155));
-        TeacherTable1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        TeacherTable1.setModel(new javax.swing.table.DefaultTableModel(
+        renewedTeacherTable.setBackground(new java.awt.Color(156, 219, 155));
+        renewedTeacherTable.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        renewedTeacherTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -137,7 +139,7 @@ public class TeacherAnnualRegistration extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(TeacherTable1);
+        jScrollPane3.setViewportView(renewedTeacherTable);
 
         add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 490, 100));
 
@@ -179,10 +181,21 @@ public class TeacherAnnualRegistration extends javax.swing.JPanel {
         layout.previous(rightPanel);        
     }
     
+    public void setRenewTable(List<Object[]> ol){
+        DefaultTableModel tableModel=(DefaultTableModel) renewedTeacherTable.getModel();
+        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Registed Date"}); 
+        ol.forEach((e)-> {tableModel.addRow(e);});
+       renewedTeacherTable.setModel(tableModel);
+    }
+    
+    public void setPastTable(List<Object[]> ol){
+        DefaultTableModel tableModel=(DefaultTableModel) pastTeacherTable.getModel();
+        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Registed Date"}); 
+        ol.forEach((e)-> {tableModel.addRow(e);});
+       pastTeacherTable.setModel(tableModel);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TeacherTable;
-    private javax.swing.JTable TeacherTable1;
     private javax.swing.JButton btnBack1;
     private javax.swing.JButton btnViewTeacher;
     private javax.swing.JLabel jLabel2;
@@ -190,5 +203,7 @@ public class TeacherAnnualRegistration extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable pastTeacherTable;
+    private javax.swing.JTable renewedTeacherTable;
     // End of variables declaration//GEN-END:variables
 }

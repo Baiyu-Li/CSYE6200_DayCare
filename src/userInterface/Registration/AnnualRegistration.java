@@ -4,6 +4,7 @@
  */
 package userInterface.Registration;
 
+import Controller.SqliteController;
 import userInterface.Student.*;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
@@ -16,14 +17,17 @@ import javax.swing.JPanel;
  */
 public class AnnualRegistration extends javax.swing.JPanel {
 
-    JPanel rightPanel;
+    JPanel container;
     
     /**
      * Creates new form manageTeacher
      */
-    public AnnualRegistration(JPanel rp) {
+    private CardLayout clayout;
+    public AnnualRegistration(JPanel container) {
         initComponents();     
-        rightPanel = rp;
+        this.container = container;
+        SqliteController.test();
+        clayout = (CardLayout) container.getLayout();
     }
 
     /**
@@ -70,31 +74,17 @@ public class AnnualRegistration extends javax.swing.JPanel {
 
     private void btnTeacherCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeacherCheckActionPerformed
         // TODO add your handling code here:
-        TeacherAnnualRegistration etp = new TeacherAnnualRegistration(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("TeacherAnnualRegistrationJPanel",etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        ((TeacherAnnualRegistration)this.container.getComponent(8)).setRenewTable(SqliteController.getAllTeacher());
+        ((TeacherAnnualRegistration)this.container.getComponent(8)).setPastTable(SqliteController.getAllTeacher());
+        clayout.show(container, "TeacherAnnualRegistrationJPanel");
     }//GEN-LAST:event_btnTeacherCheckActionPerformed
 
     private void btnStudentCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentCheckActionPerformed
         // TODO add your handling code here:
-        StudentAnnualRegistration etp = new StudentAnnualRegistration(rightPanel);
-        rightPanel.removeAll();
-        rightPanel.add("StudentAnnualRegistrationJPanel",etp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
+        ((StudentAnnualRegistration)this.container.getComponent(8)).setRenewTable(SqliteController.getAllTeacher());
+        ((StudentAnnualRegistration)this.container.getComponent(8)).setPastTable(SqliteController.getAllTeacher());
+        clayout.show(container, "StudentAnnualRegistration");
     }//GEN-LAST:event_btnStudentCheckActionPerformed
-
-    private void backAction(){
-        rightPanel.remove(this);
-        Component[] componentArray = rightPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManageStudent msjp = (ManageStudent) component;
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.previous(rightPanel);        
-    }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStudentCheck;
