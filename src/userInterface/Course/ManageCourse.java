@@ -4,16 +4,12 @@
  */
 package userInterface.Course;
 
-import Controller.MainController;
+import Controller.CourseController;
 import Controller.SqliteController;
-import userInterface.Teacher.*;
 import java.awt.CardLayout;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
-import userInterface.Immunization.ViewStudentImmunization;
-import userInterface.Student.ManageStudent;
-import userInterface.MainFrame;
 
 /**
  *
@@ -27,7 +23,8 @@ public class ManageCourse extends javax.swing.JPanel {
      * Creates new form manageTeacher
      */
     private CardLayout clayout;
-
+    static int selectedCourseId;
+    static String selectedCourse;
     public ManageCourse(JPanel container) {        
         initComponents();     
         this.container = container;
@@ -55,25 +52,23 @@ public class ManageCourse extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(650, 400));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-
         CourseTable.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         CourseTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "Time", "Loaction", "Instructor"
+                "ID", "Name", "StarttoEndDate", "Time", "Loaction", "Subejct", "Instructor"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -129,8 +124,21 @@ public class ManageCourse extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void tbnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnViewActionPerformed
-        // TODO add your handling code here:
-        ((ViewCourse)this.container.getComponent(5)).setTable(SqliteController.getAllTeacher());
+        CourseController cc=new CourseController(container);
+        int row=0;
+        if(!CourseTable.getSelectionModel().isSelectionEmpty()){
+            row=CourseTable.getSelectedRow();
+            Object o=CourseTable.getModel().getValueAt(row, 1);
+            if(o !=null){
+                selectedCourseId=Integer.parseInt(o.toString());
+                selectedCourse=CourseTable.getModel().getValueAt(row, 2).toString();
+                if(CourseController.cEnrolllist.isEmpty()){
+                cc.viewCourseEnrollDetailfromDB(selectedCourseId);
+            }else{
+                cc.viewCourseEnrollDetail();
+            
+            }
+        }}
         clayout.show(container, "viewCourseJPanel");
     }//GEN-LAST:event_tbnViewActionPerformed
 
@@ -143,8 +151,8 @@ public class ManageCourse extends javax.swing.JPanel {
     //import value from database
     public void setTable(List<Object[]> ol){
         DefaultTableModel tableModel=(DefaultTableModel) CourseTable.getModel();
-        tableModel.setColumnIdentifiers(new Object[]{"ID", "Name", "Time", "Location", "Instructor"}); 
-        ol.forEach((e)-> {tableModel.addRow(e);});
+        //tableModel.setColumnIdentifiers(new Object[]{"ID", "Name", "StarttoEndDate","Time", "Location","Subject", "Instructor"}); 
+        ol.forEach((e)-> {tableModel.insertRow(ol.indexOf(e),e);});
        CourseTable.setModel(tableModel);
     }
 

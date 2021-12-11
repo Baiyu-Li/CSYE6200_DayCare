@@ -4,6 +4,7 @@
  */
 package userInterface.Course;
 
+import Controller.CourseController;
 import Controller.SqliteController;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
@@ -26,7 +27,9 @@ public class ViewCourse extends javax.swing.JPanel {
     private CardLayout clayout;
     
     public ViewCourse(JPanel container) {
-        initComponents();     
+        initComponents(); 
+        courseNameLabel.setText(ManageCourse.selectedCourse);
+        courseId.setText(ManageCourse.selectedCourseId+"");
         this.container = container;
         SqliteController.test();
         clayout = (CardLayout) container.getLayout();  
@@ -46,8 +49,8 @@ public class ViewCourse extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnDelete = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        courseId = new javax.swing.JTextField();
+        courseNameLabel = new javax.swing.JLabel();
         btnBack6 = new javax.swing.JButton();
         tbnAssignStudent = new javax.swing.JButton();
         tbnViewStudent = new javax.swing.JButton();
@@ -55,8 +58,6 @@ public class ViewCourse extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(650, 400));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
         enrolledStudentTable.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         enrolledStudentTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -110,16 +111,16 @@ public class ViewCourse extends javax.swing.JPanel {
         jLabel4.setText("ID");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, -1, -1));
 
-        txtId.addActionListener(new java.awt.event.ActionListener() {
+        courseId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
+                courseIdActionPerformed(evt);
             }
         });
-        add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, 40, -1));
+        add(courseId, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, 40, -1));
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel2.setText("Course Details");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, -1));
+        courseNameLabel.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        courseNameLabel.setText("Course Details");
+        add(courseNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, -1));
 
         btnBack6.setBackground(new java.awt.Color(255, 255, 255));
         btnBack6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -153,17 +154,30 @@ public class ViewCourse extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        int row=enrolledStudentTable.getSelectedRow();
+        Object o=enrolledStudentTable.getModel().getValueAt(row, 1);
+        if(o !=null){
+            int sid=Integer.parseInt(o.toString());
+            int cId=Integer.parseInt(courseId.getText());
+            CourseController cc=new CourseController(container);
+            cc.removeEnrollStudent(cId, sid);
+        }
+        
+        
         
     }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+    private void courseIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdActionPerformed
+    }//GEN-LAST:event_courseIdActionPerformed
 
     private void btnBack6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack6ActionPerformed
-        // TODO add your handling code here:
-        ((ManageCourse)this.container.getComponent(4)).setTable(SqliteController.getAllTeacher());
+        CourseController cc=new CourseController(container);
+        if(CourseController.clist.isEmpty()){
+            cc.showCourseTabelfromDB();
+        }else{
+            cc.showCoursewithList();
+        }
         clayout.show(container, "courseManage");
     }//GEN-LAST:event_btnBack6ActionPerformed
 
@@ -181,17 +195,18 @@ public class ViewCourse extends javax.swing.JPanel {
 
     public void setTable(List<Object[]> ol){
         DefaultTableModel tableModel=(DefaultTableModel) enrolledStudentTable.getModel();
-        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Subject"}); 
-        ol.forEach((e)-> {tableModel.addRow(e);});
+        //tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Subject"}); 
+        ol.forEach((e)-> {tableModel.insertRow(ol.indexOf(e),e);});
        enrolledStudentTable.setModel(tableModel);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack6;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JTextField courseId;
+    private javax.swing.JLabel courseNameLabel;
     private javax.swing.JTable enrolledStudentTable;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton tbnAssignStudent;
