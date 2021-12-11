@@ -4,12 +4,16 @@
  */
 package userInterface.Course;
 
+import Controller.CourseController;
 import Controller.SqliteController;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import static userInterface.Course.ManageCourse.selectedCourse;
+import static userInterface.Course.ManageCourse.selectedCourseId;
 
 /**
  *
@@ -27,6 +31,7 @@ public class AssignStudent extends javax.swing.JPanel {
     public AssignStudent(JPanel container) {        
         initComponents();     
         this.container = container;
+        courseIDLabel2.setText((ManageCourse.selectedCourseId+""));
         SqliteController.test();
         clayout = (CardLayout) container.getLayout();
     }
@@ -41,13 +46,13 @@ public class AssignStudent extends javax.swing.JPanel {
     private void initComponents() {
 
         btnBack = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        courseIDlabel = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         StudentTable = new javax.swing.JTable();
         tbnEnrollStudent = new javax.swing.JButton();
+        courseIDLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(650, 400));
@@ -63,26 +68,17 @@ public class AssignStudent extends javax.swing.JPanel {
         });
         add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 90, -1));
 
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel4.setText("Course ID");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, -1, -1));
+        courseIDlabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        courseIDlabel.setText("Course ID");
+        add(courseIDlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel7.setText("Assign Student to Course");
         add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, -1));
 
-        txtId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
-            }
-        });
-        add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 30, 30, -1));
-
         jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel9.setText("Student List");
         add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, -1, -1));
-
-        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
 
         StudentTable.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         StudentTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -124,6 +120,9 @@ public class AssignStudent extends javax.swing.JPanel {
             }
         });
         add(tbnEnrollStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 290, 120, -1));
+
+        courseIDLabel2.setText("jLabel1");
+        add(courseIDLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -132,30 +131,43 @@ public class AssignStudent extends javax.swing.JPanel {
         clayout.show(container, "viewCourseJPanel");
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdActionPerformed
-
     private void tbnEnrollStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnEnrollStudentActionPerformed
-        // TODO add your handling code here:
+        CourseController cc=new CourseController(container);
+        if(!StudentTable.getSelectionModel().isSelectionEmpty()){
+            int row=StudentTable.getSelectedRow();
+            Object o=StudentTable.getModel().getValueAt(row, 1);
+            if(o !=null){
+                int sid=Integer.parseInt(o.toString());
+                int cid=Integer.parseInt(courseIDLabel2.getText());
+                int i=cc.addnewCourseStudent(cid,sid);
+                if(i==0){
+                    JOptionPane.showMessageDialog(null, "failed to insert new enroll student");
+                }else{
+                    cc.viewCourseEnrollDetailfromDB(cid);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "no student in this table");
+            }
+        }else{
+              JOptionPane.showMessageDialog(null, "Please select one student to enroll ^ ^");  
+        }
 
     }//GEN-LAST:event_tbnEnrollStudentActionPerformed
 
-    public void setTable(List<Object[]> ol){
+public void setTable(List<Object[]> ol){
         DefaultTableModel tableModel=(DefaultTableModel) StudentTable.getModel();
         tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Subject"}); 
         ol.forEach((e)-> {tableModel.addRow(e);});
        StudentTable.setModel(tableModel);
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable StudentTable;
     private javax.swing.JButton btnBack;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel courseIDLabel2;
+    private javax.swing.JLabel courseIDlabel;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton tbnEnrollStudent;
-    private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
 }

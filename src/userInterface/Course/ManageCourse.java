@@ -8,6 +8,7 @@ import Controller.CourseController;
 import Controller.SqliteController;
 import java.awt.CardLayout;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,7 +24,7 @@ public class ManageCourse extends javax.swing.JPanel {
      * Creates new form manageTeacher
      */
     private CardLayout clayout;
-    static int selectedCourseId;
+    static int selectedCourseId =1;
     static String selectedCourse;
     public ManageCourse(JPanel container) {        
         initComponents();     
@@ -119,7 +120,19 @@ public class ManageCourse extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        if(!CourseTable.getSelectionModel().isSelectionEmpty()){
+            int row=CourseTable.getSelectedRow();
+            Object o=CourseTable.getModel().getValueAt(row, 1);
+            if(o !=null){
+                int cid=Integer.parseInt(o.toString());
+                CourseController cc=new CourseController(container);
+                cc.removeCourse(cid);
+            }else{
+                JOptionPane.showMessageDialog(null, "no course in this table, can not delete.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select one course to delete ^ ^");
+        }
         
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -128,18 +141,22 @@ public class ManageCourse extends javax.swing.JPanel {
         int row=0;
         if(!CourseTable.getSelectionModel().isSelectionEmpty()){
             row=CourseTable.getSelectedRow();
+        }
             Object o=CourseTable.getModel().getValueAt(row, 1);
             if(o !=null){
                 selectedCourseId=Integer.parseInt(o.toString());
                 selectedCourse=CourseTable.getModel().getValueAt(row, 2).toString();
                 if(CourseController.cEnrolllist.isEmpty()){
-                cc.viewCourseEnrollDetailfromDB(selectedCourseId);
+                    cc.viewCourseEnrollDetailfromDB(selectedCourseId);
+                }else{
+                    cc.viewCourseEnrollDetail();
+                }
+                clayout.show(container, "viewCourseJPanel");
             }else{
-                cc.viewCourseEnrollDetail();
-            
+                JOptionPane.showMessageDialog(null, "no course in this table, can not view detail.");
             }
-        }}
-        clayout.show(container, "viewCourseJPanel");
+        
+        
     }//GEN-LAST:event_tbnViewActionPerformed
 
     private void tbnEnrollCourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnEnrollCourActionPerformed

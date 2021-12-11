@@ -9,6 +9,7 @@ import Controller.SqliteController;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -154,15 +155,20 @@ public class ViewCourse extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        int row=enrolledStudentTable.getSelectedRow();
-        Object o=enrolledStudentTable.getModel().getValueAt(row, 1);
-        if(o !=null){
-            int sid=Integer.parseInt(o.toString());
-            int cId=Integer.parseInt(courseId.getText());
-            CourseController cc=new CourseController(container);
-            cc.removeEnrollStudent(cId, sid);
+        if(!enrolledStudentTable.getSelectionModel().isSelectionEmpty()){
+            int row=enrolledStudentTable.getSelectedRow();
+            Object o=enrolledStudentTable.getModel().getValueAt(row, 1);
+            if(o !=null){
+                int sid=Integer.parseInt(o.toString());
+                int cId=Integer.parseInt(courseId.getText());
+                CourseController cc=new CourseController(container);
+                cc.removeEnrollStudent(cId, sid);
+            }else{
+                JOptionPane.showMessageDialog(null, "no student register this course, can not delete.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select one student to delete ^ ^");
         }
-        
         
         
     }//GEN-LAST:event_btnDeleteActionPerformed
@@ -182,7 +188,8 @@ public class ViewCourse extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBack6ActionPerformed
 
     private void tbnAssignStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnAssignStudentActionPerformed
-        // TODO add your handling code here:
+        // need to be changed, so can get student data*******
+        //*************************
         ((AssignStudent)this.container.getComponent(16)).setTable(SqliteController.getAllTeacher());
         clayout.show(container, "assignStudentJPanel");
     }//GEN-LAST:event_tbnAssignStudentActionPerformed

@@ -4,11 +4,10 @@
  */
 package userInterface.Course;
 
-import userInterface.Student.*;
+import Controller.CourseController;
 import Controller.SqliteController;
-import userInterface.Teacher.*;
 import java.awt.CardLayout;
-import java.awt.Component;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -45,11 +44,21 @@ public class EnrollCourse extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         txtInstructor = new javax.swing.JTextField();
         txtLocation = new javax.swing.JTextField();
-        txtCoursename = new javax.swing.JTextField();
+        txtSdate = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        txtTime = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtEdate = new javax.swing.JTextField();
+        txtCoursename = new javax.swing.JTextField();
+        txtSubject = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtStime = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtetime = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtwod = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -76,11 +85,11 @@ public class EnrollCourse extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Course Name");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Instructor");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, -1, -1));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, -1));
 
         txtInstructor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtInstructor.addActionListener(new java.awt.event.ActionListener() {
@@ -88,7 +97,7 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtInstructorActionPerformed(evt);
             }
         });
-        add(txtInstructor, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 100, -1));
+        add(txtInstructor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 100, -1));
 
         txtLocation.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtLocation.addActionListener(new java.awt.event.ActionListener() {
@@ -96,7 +105,41 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtLocationActionPerformed(evt);
             }
         });
-        add(txtLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 100, -1));
+        add(txtLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 100, -1));
+
+        txtSdate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtSdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSdateActionPerformed(evt);
+            }
+        });
+        add(txtSdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 100, -1));
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel7.setText("Create New Course");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel8.setText("Location");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel9.setText("Subject");
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, -1, -1));
+
+        jLabel1.setText("Start Date");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, -1));
+
+        jLabel2.setText("End Date");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 146, -1, 20));
+
+        txtEdate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtEdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEdateActionPerformed(evt);
+            }
+        });
+        add(txtEdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 100, -1));
 
         txtCoursename.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtCoursename.addActionListener(new java.awt.event.ActionListener() {
@@ -104,27 +147,49 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtCoursenameActionPerformed(evt);
             }
         });
-        add(txtCoursename, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 100, -1));
+        add(txtCoursename, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 100, -1));
 
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel7.setText("Create New Course");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
-
-        jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel8.setText("Lacation");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, -1, -1));
-
-        jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel9.setText("Time");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, -1, -1));
-
-        txtTime.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtTime.addActionListener(new java.awt.event.ActionListener() {
+        txtSubject.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtSubject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimeActionPerformed(evt);
+                txtSubjectActionPerformed(evt);
             }
         });
-        add(txtTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, 100, -1));
+        add(txtSubject, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 220, 100, -1));
+
+        jLabel4.setText("Start Time");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, -1, -1));
+
+        txtStime.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtStime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStimeActionPerformed(evt);
+            }
+        });
+        add(txtStime, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 100, -1));
+
+        jLabel5.setText("End Time");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, -1, -1));
+
+        txtetime.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtetime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtetimeActionPerformed(evt);
+            }
+        });
+        add(txtetime, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 140, 100, -1));
+
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel10.setText("Week of Day");
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+
+        txtwod.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtwod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtwodActionPerformed(evt);
+            }
+        });
+        add(txtwod, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, 100, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -134,8 +199,38 @@ public class EnrollCourse extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
-        // TODO add your handling code here:
-        
+        if(txtCoursename.getText().equals("")||txtSdate.getText().equals("")||txtEdate.getText().equals("")||txtwod.getText().equals("")
+                ||txtStime.getText().equals("")||txtetime.getText().equals("")||txtLocation.getText().equals("")||txtSubject.getText().equals("")||txtInstructor.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Please fill out all text fields ^ ^");
+        }else{
+            StringBuilder sb=new StringBuilder();
+            sb.append(CourseController.clist.size()+1).append(",")
+                .append(txtCoursename.getText()).append(",")
+                .append(txtSdate.getText()).append(",")
+                .append(txtEdate.getText()).append(",")
+                .append(txtwod.getText()).append(",")
+                .append(txtStime.getText()).append(",")
+                .append(txtetime.getText()).append(",")
+                .append(txtLocation.getText()).append(",")
+                .append(txtSubject.getText()).append(",")
+                .append(txtInstructor.getText()).append(",");
+            CourseController cc=new CourseController(container);
+            int i=cc.addnewCourse(sb.toString());
+            if(i==0){
+                System.out.println("fialed to insert new course");
+            }else{
+                txtCoursename.setText("");
+                txtSdate.setText("");
+                txtEdate.setText("");
+                txtwod.setText("");
+                txtStime.setText("");
+                txtetime.setText("");
+                txtLocation.setText("");
+                txtSubject.setText("");
+                txtInstructor.setText("");
+                System.out.println("insert new course successfuly!");
+            }
+        }
     }//GEN-LAST:event_btnEnrollActionPerformed
 
     private void txtInstructorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInstructorActionPerformed
@@ -146,26 +241,56 @@ public class EnrollCourse extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLocationActionPerformed
 
+    private void txtSdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSdateActionPerformed
+
+    private void txtEdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEdateActionPerformed
+
     private void txtCoursenameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCoursenameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCoursenameActionPerformed
 
-    private void txtTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimeActionPerformed
+    private void txtSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSubjectActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimeActionPerformed
+    }//GEN-LAST:event_txtSubjectActionPerformed
+
+    private void txtStimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStimeActionPerformed
+
+    private void txtetimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtetimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtetimeActionPerformed
+
+    private void txtwodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtwodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtwodActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnEnroll;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField txtCoursename;
+    private javax.swing.JTextField txtEdate;
     private javax.swing.JTextField txtInstructor;
     private javax.swing.JTextField txtLocation;
-    private javax.swing.JTextField txtTime;
+    private javax.swing.JTextField txtSdate;
+    private javax.swing.JTextField txtStime;
+    private javax.swing.JTextField txtSubject;
+    private javax.swing.JTextField txtetime;
+    private javax.swing.JTextField txtwod;
     // End of variables declaration//GEN-END:variables
 }
