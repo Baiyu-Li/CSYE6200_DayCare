@@ -9,6 +9,8 @@ import Controller.MainController;
 import Controller.SqliteController;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
+import userInterface.Course.AssignStudent;
+import userInterface.Course.EnrollCourse;
 import userInterface.Course.ManageCourse;
 import userInterface.Course.ViewCourse;
 import userInterface.Immunization.ViewStudentImmunization;
@@ -56,6 +58,8 @@ public class MainFrame extends javax.swing.JFrame {
         AddRecord arp = new AddRecord(container);
         ViewTeacher vtp = new ViewTeacher(container);
         EnrollTeacher etp = new EnrollTeacher(container);
+        EnrollCourse ecp = new EnrollCourse(container);
+        AssignStudent asp = new AssignStudent(container);
                         
         container.add("teacherManage", mtp);//1
         container.add("studentManage", msp);//2
@@ -71,6 +75,8 @@ public class MainFrame extends javax.swing.JFrame {
         container.add("addRecordJPanel",arp);//12
         container.add("viewTeacherJPanel",vtp);//13
         container.add("enrollTeacherJPanel",etp);//14
+        container.add("enrollCourseJPanel",ecp);//15
+        container.add("assignStudentJPanel",asp);//16
 
         MainController mc=new MainController(this,container);
         SqliteController.test();

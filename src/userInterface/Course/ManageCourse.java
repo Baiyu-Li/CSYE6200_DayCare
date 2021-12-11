@@ -49,6 +49,7 @@ public class ManageCourse extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnDelete = new javax.swing.JButton();
         tbnView = new javax.swing.JButton();
+        tbnEnrollCour = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(650, 400));
@@ -110,6 +111,16 @@ public class ManageCourse extends javax.swing.JPanel {
             }
         });
         add(tbnView, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 110, -1));
+
+        tbnEnrollCour.setBackground(new java.awt.Color(255, 255, 255));
+        tbnEnrollCour.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tbnEnrollCour.setText("Create Course");
+        tbnEnrollCour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbnEnrollCourActionPerformed(evt);
+            }
+        });
+        add(tbnEnrollCour, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, 130, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -122,6 +133,12 @@ public class ManageCourse extends javax.swing.JPanel {
         ((ViewCourse)this.container.getComponent(5)).setTable(SqliteController.getAllTeacher());
         clayout.show(container, "viewCourseJPanel");
     }//GEN-LAST:event_tbnViewActionPerformed
+
+    private void tbnEnrollCourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnEnrollCourActionPerformed
+        // TODO add your handling code here:
+        //((EnrollCourse)this.container.getComponent(15)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "enrollCourseJPanel");
+    }//GEN-LAST:event_tbnEnrollCourActionPerformed
 
     //import value from database
     public void setTable(List<Object[]> ol){
@@ -136,6 +153,7 @@ public class ManageCourse extends javax.swing.JPanel {
     private javax.swing.JButton btnDelete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton tbnEnrollCour;
     private javax.swing.JButton tbnView;
     // End of variables declaration//GEN-END:variables
 }

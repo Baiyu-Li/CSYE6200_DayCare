@@ -49,6 +49,8 @@ public class ViewCourse extends javax.swing.JPanel {
         txtId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnBack6 = new javax.swing.JButton();
+        tbnAssignStudent = new javax.swing.JButton();
+        tbnViewStudent = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(650, 400));
@@ -102,7 +104,7 @@ public class ViewCourse extends javax.swing.JPanel {
                 btnDeleteActionPerformed(evt);
             }
         });
-        add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 320, 80, -1));
+        add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, 80, -1));
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("ID");
@@ -128,6 +130,26 @@ public class ViewCourse extends javax.swing.JPanel {
             }
         });
         add(btnBack6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, -1));
+
+        tbnAssignStudent.setBackground(new java.awt.Color(255, 255, 255));
+        tbnAssignStudent.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tbnAssignStudent.setText("Assign Student");
+        tbnAssignStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbnAssignStudentActionPerformed(evt);
+            }
+        });
+        add(tbnAssignStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 140, -1));
+
+        tbnViewStudent.setBackground(new java.awt.Color(255, 255, 255));
+        tbnViewStudent.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tbnViewStudent.setText("View Detail");
+        tbnViewStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbnViewStudentActionPerformed(evt);
+            }
+        });
+        add(tbnViewStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 110, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -145,6 +167,18 @@ public class ViewCourse extends javax.swing.JPanel {
         clayout.show(container, "courseManage");
     }//GEN-LAST:event_btnBack6ActionPerformed
 
+    private void tbnAssignStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnAssignStudentActionPerformed
+        // TODO add your handling code here:
+        ((AssignStudent)this.container.getComponent(16)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "assignStudentJPanel");
+    }//GEN-LAST:event_tbnAssignStudentActionPerformed
+
+    private void tbnViewStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnViewStudentActionPerformed
+        // TODO add your handling code here:
+        //((ViewStudent)this.container.getComponent(7)).setTable(SqliteController.getAllTeacher());
+        clayout.show(container, "viewStudentJPanel");
+    }//GEN-LAST:event_tbnViewStudentActionPerformed
+
     public void setTable(List<Object[]> ol){
         DefaultTableModel tableModel=(DefaultTableModel) enrolledStudentTable.getModel();
         tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Subject"}); 
@@ -153,12 +187,6 @@ public class ViewCourse extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnBack1;
-    private javax.swing.JButton btnBack2;
-    private javax.swing.JButton btnBack3;
-    private javax.swing.JButton btnBack4;
-    private javax.swing.JButton btnBack5;
     private javax.swing.JButton btnBack6;
     private javax.swing.JButton btnDelete;
     private javax.swing.JTable enrolledStudentTable;
@@ -166,6 +194,8 @@ public class ViewCourse extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton tbnAssignStudent;
+    private javax.swing.JButton tbnViewStudent;
     private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
 }
