@@ -23,4 +23,7 @@ public class VaccineRule {
         requirements.put(v, requiredCount);
     }
     
+    public int getDoseRequired(VaccineEnum v){
+        return requirements.get(v);
+    }
 }

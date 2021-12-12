@@ -13,6 +13,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import medical.immunization.VaccineEnum;
+import medical.immunization.VaccineRecord;
+import medical.immunization.VaccineRules;
 import userInterface.Course.ViewCourse;
 
 /**
@@ -24,6 +27,7 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
     JPanel container;
     
     String currentStudentName;
+    int age;
     
     int updateRow = -1;
     
@@ -31,7 +35,7 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
      * Creates new form manageTeacher
      */
     private CardLayout clayout;
-    public ViewStudentImmunization(JPanel container, String currentStudentName) {
+    public ViewStudentImmunization(JPanel container, String currentStudentName, int age) {
         initComponents();     
         this.container = container;
         SqliteController.test();
@@ -39,6 +43,7 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
         this.currentStudentName = currentStudentName;
         updateRowButton.setVisible(false);
         jLabel7.setText("Manage Immunization records for: "+currentStudentName);
+        this.age = age;
 
     }
 
@@ -67,10 +72,7 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
 
         RecordTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Vaccine name", "Completed doses", "Required Doses", "Previous dose Date", "Past due date?"
@@ -133,8 +135,8 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
         
         
         if(!RecordTable2.getSelectionModel().isSelectionEmpty()){
-            int row=RecordTable2.getSelectedRow();
-            Object o=RecordTable2.getModel().getValueAt(row, 1);
+            int row = RecordTable2.getSelectedRow();
+            Object o = RecordTable2.getModel().getValueAt(row, 1);
             
             RecordTable2.setEditingRow(row);
             
@@ -146,7 +148,7 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
                 int sid=Integer.parseInt(o.toString());
                 String name=o.toString();
 
-                ViewStudentImmunization vsi = new ViewStudentImmunization(container, name);
+                ViewStudentImmunization vsi = new ViewStudentImmunization(container, name, age);
 
                 clayout.show(container, "viewStudentImmunizationJPanel");
                 
@@ -160,15 +162,47 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
     private void updateRowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateRowButtonActionPerformed
         // TODO add your handling code here:
         
-                updateRowButton.setVisible(false);
+        Object newRow = RecordTable2.getModel().getValueAt(updateRow, 1);
+
+        if(newRow != null){
+            VaccineRecord newVR = (VaccineRecord)newRow;
+            
+            String newDate = (RecordTable2.getModel().getValueAt(updateRow, 3)).toString();
+            
+            SqliteController.updateVaccineRecordsForStudent(newVR.getID(), newDate);
+        }
+        
+        updateRowButton.setVisible(false);
         
     }//GEN-LAST:event_updateRowButtonActionPerformed
 
     //import value from database
     public void setTableUpcoming(List<Object[]> ol){
+        
+        /*
+            o[0]=rs.getString("ID");
+            o[1]=rs.getString("studentId");
+            o[2]=rs.getString("vaccineName");
+            o[3]=rs.getString("vaccineId");
+            o[4]=rs.getInt("vaccineCount");
+            o[5]=rs.getString("lastDose");
+        */
         DefaultTableModel tableModel=(DefaultTableModel) RecordTable2.getModel();
-        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Group"});
-        //tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "VaccineName","LastVacccinedDate","DoesCompleted"}); 
+        tableModel.setColumnIdentifiers(new Object[]{"vaccineName", "vaccineCount", "requiredDose", "previousDoseDate", "due"});
+        
+        for(Object[] o : ol){
+            
+            String vaccineName = String.valueOf(o[2]);
+            
+            Object[] row = new Object[5];
+            row[0] = o[2];//vaccine name
+            row[1] = o[4];//vaccine count
+            row[2] = VaccineRules.getRuleForAge(age).getDoseRequired(VaccineEnum.valueOf(vaccineName));
+            row[3] = o[5];//previous dose date
+            row[4] = false;
+            
+        }
+        
         ol.forEach((e)-> {tableModel.addRow(e);});
        RecordTable2.setModel(tableModel);
     }

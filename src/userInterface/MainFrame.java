@@ -10,6 +10,7 @@ import Controller.MainController;
 import Controller.SqliteController;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
+import medical.immunization.VaccineCSVGenerator;
 import userInterface.Course.AssignStudent;
 import userInterface.Course.EnrollCourse;
 import userInterface.Course.ManageCourse;
@@ -89,6 +90,15 @@ public class MainFrame extends javax.swing.JFrame {
         MainController mc=new MainController(this,container);
         SqliteController.test();
         this.teacherShow(e-> clayout.show(container, "teacherManage"));
+        
+        //******************************
+        //initialize immunization requirements
+        //******************************
+        //generate immunization tables
+        SqliteController.createVaccineRecordTable();
+        
+        VaccineCSVGenerator csv = new VaccineCSVGenerator();
+        csv.generateRuleFromSample();
     }
 
     /**
@@ -194,7 +204,7 @@ public class MainFrame extends javax.swing.JFrame {
 //        //container layout show() display panel with name
 //        clayout.show(container, "immunizationManage");
         
-        ((ManageStudentImmunization)this.container.getComponent(16)).setTable(SqliteController.getAllTeacher());
+        ((ManageStudentImmunization)this.container.getComponent(16)).setTable(SqliteController.getAllStudents());
         clayout.show(container, "manageStudentImmunizationJPanel");
         
     }//GEN-LAST:event_immunizationActionPerformed
