@@ -28,6 +28,7 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
     
     String currentStudentName;
     int age;
+    int studentId;
     
     int updateRow = -1;
     
@@ -35,15 +36,15 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
      * Creates new form manageTeacher
      */
     private CardLayout clayout;
-    public ViewStudentImmunization(JPanel container, String currentStudentName, int age) {
+    public ViewStudentImmunization(JPanel container, String currentStudentName, int age, int studentId) {
         initComponents();     
         this.container = container;
         SqliteController.test();
         clayout = (CardLayout) container.getLayout();
         this.currentStudentName = currentStudentName;
-        updateRowButton.setVisible(false);
         jLabel7.setText("Manage Immunization records for: "+currentStudentName);
         this.age = age;
+        this.studentId = studentId;
 
     }
 
@@ -60,7 +61,6 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         RecordTable2 = new javax.swing.JTable();
         tbnView1 = new javax.swing.JButton();
-        updateRowButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(650, 400));
@@ -75,14 +75,14 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Vaccine name", "Completed doses", "Required Doses", "Previous dose Date", "Past due date?"
+                "Vaccine name", "Completed doses", "Required Doses", "Previous dose Date", "Past due date?", "id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -106,21 +106,13 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
 
         tbnView1.setBackground(new java.awt.Color(255, 255, 255));
         tbnView1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tbnView1.setText("Update Vaccine info");
+        tbnView1.setText("Update Vaccine Record info");
         tbnView1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbnView1ActionPerformed(evt);
             }
         });
         add(tbnView1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, -1, -1));
-
-        updateRowButton.setText("Update");
-        updateRowButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateRowButtonActionPerformed(evt);
-            }
-        });
-        add(updateRowButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -129,28 +121,39 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
         // TODO add your handling code here:
         //((ViewStudent)this.container.getComponent(7)).setTable(SqliteController.getAllTeacher());
         
-        ManageStudentImmunization msi = new ManageStudentImmunization(container);
         
-        clayout.addLayoutComponent(msi, container);
-        
-        
+       
+
         if(!RecordTable2.getSelectionModel().isSelectionEmpty()){
             int row = RecordTable2.getSelectedRow();
-            Object o = RecordTable2.getModel().getValueAt(row, 1);
+            Object o = RecordTable2.getModel().getValueAt(row, 0);
             
             RecordTable2.setEditingRow(row);
             
             updateRow = row;
-            
-            updateRowButton.setVisible(true);
-            
+                        
             if(o !=null){
-                int sid=Integer.parseInt(o.toString());
+                
                 String name=o.toString();
-
-                ViewStudentImmunization vsi = new ViewStudentImmunization(container, name, age);
-
-                clayout.show(container, "viewStudentImmunizationJPanel");
+                
+                String vacName = (String) o;
+                int completedCount = (Integer)RecordTable2.getModel().getValueAt(row, 1);
+                int reqCount = (Integer)RecordTable2.getModel().getValueAt(row,2);
+                String lastDate = (String)RecordTable2.getModel().getValueAt(row, 3);
+                String id = (String)RecordTable2.getModel().getValueAt(row, 5);
+                
+                /*
+                JPanel container, String currentStudentName, 
+            String vaccineName, int count, int reqCount, String doseDate, 
+            int age
+                */
+                
+                UpdateStudentVaccineRecord vsi = new UpdateStudentVaccineRecord(container, currentStudentName, vacName, 
+                        completedCount, reqCount, lastDate, age, id);
+                container.add(vsi);
+                CardLayout layout = (CardLayout) container.getLayout();
+                layout.next(container);
+                
                 
             }
         }else{
@@ -158,23 +161,6 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_tbnView1ActionPerformed
-
-    private void updateRowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateRowButtonActionPerformed
-        // TODO add your handling code here:
-        
-        Object newRow = RecordTable2.getModel().getValueAt(updateRow, 1);
-
-        if(newRow != null){
-            VaccineRecord newVR = (VaccineRecord)newRow;
-            
-            String newDate = (RecordTable2.getModel().getValueAt(updateRow, 3)).toString();
-            
-            SqliteController.updateVaccineRecordsForStudent(newVR.getID(), newDate);
-        }
-        
-        updateRowButton.setVisible(false);
-        
-    }//GEN-LAST:event_updateRowButtonActionPerformed
 
     //import value from database
     public void setTableUpcoming(List<Object[]> ol){
@@ -188,22 +174,23 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
             o[5]=rs.getString("lastDose");
         */
         DefaultTableModel tableModel=(DefaultTableModel) RecordTable2.getModel();
-        tableModel.setColumnIdentifiers(new Object[]{"vaccineName", "vaccineCount", "requiredDose", "previousDoseDate", "due"});
+        tableModel.setColumnIdentifiers(new Object[]{"vaccineName", "vaccineCount", "requiredDose", "previousDoseDate", "due","ID"});
         
         for(Object[] o : ol){
             
             String vaccineName = String.valueOf(o[2]);
             
-            Object[] row = new Object[5];
+            Object[] row = new Object[6];
             row[0] = o[2];//vaccine name
             row[1] = o[4];//vaccine count
             row[2] = VaccineRules.getRuleForAge(age).getDoseRequired(VaccineEnum.valueOf(vaccineName));
             row[3] = o[5];//previous dose date
             row[4] = false;
+            row[5] = o[0];
             
+            tableModel.addRow(row);
         }
         
-        ol.forEach((e)-> {tableModel.addRow(e);});
        RecordTable2.setModel(tableModel);
     }
 
@@ -212,6 +199,5 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton tbnView1;
-    private javax.swing.JButton updateRowButton;
     // End of variables declaration//GEN-END:variables
 }

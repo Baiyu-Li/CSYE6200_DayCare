@@ -465,6 +465,12 @@ public class SqliteController {
     }
     
     
+    /*
+    
+    Immunization code - Floyed
+    
+    */
+    
     public static void createVaccineRecordTable(){
         connDB();
         //String dsql="drop table if exists Subject";
@@ -499,11 +505,42 @@ public class SqliteController {
         return ol;
     }
     
+    public static boolean areVaccineRecordsPresentForStudent(String studentId){
+        
+        connDB();
+        
+        try{
+            String sql = "SELECT v.id FROM VaccineRecord v" ;
+//                + " WHERE vr.studentId = '"+studentId+"'";
+//            stmt=conn.prepareStatement(sql);
+
+            pstm=conn.prepareStatement(sql);
+//            pstm.executeUpdate();
+            
+            rs=stmt.executeQuery(sql);
+            Object o = rs.next();
+            
+            if(o instanceof Boolean){
+                
+                return (boolean)o;
+            } 
+            
+            return false;
+
+        }catch(SQLException e){
+    		e.printStackTrace();
+    	}finally{
+    		closeDB();
+    	}
+        
+        return false;
+    }
+    
     public static void generateVaccineRecordsForStudent(String studentId){
         
         connDB();
         
-         try{
+        try{
             String sql="INSERT INTO VaccineRecord (ID,studentId,vaccineName,vaccineCount,vaccineId,lastDoseDate)"
                     + " VALUES (?,?,?,?,?,?)";
             
@@ -527,15 +564,15 @@ public class SqliteController {
         
     }
     
-    public static void updateVaccineRecordsForStudent(String id, String newDate){
+    public static void updateVaccineRecordsForStudent(String vrId, String newDate, int newCount){
         
         connDB();
         
          try{
             String sql="Update VaccineRecord "
                     + " set lastDoseDate = '"+newDate+"', "
-                    + " vaccineCount = vaccineCount + 1 "
-                    + " where id = '"+id+"'";
+                    + " vaccineCount = '" +newCount+"' "
+                    + " where id = '"+vrId+"'";
             pstm=conn.prepareStatement(sql);
             pstm.executeUpdate();
 
@@ -561,17 +598,19 @@ public class SqliteController {
         List<Object[]> ol=new ArrayList<>();
         try{
             rs=stmt.executeQuery(sql);
+            
+            while(rs.next()){
+
                 Object[] o=new Object[7];
-    		while(rs.next()){
-                    
-                    o[0]=rs.getString("ID");
-                    o[1]=rs.getString("studentId");
-                    o[2]=rs.getString("vaccineName");
-                    o[3]=rs.getString("vaccineId");
-                    o[4]=rs.getInt("vaccineCount");
-                    o[5]=rs.getString("lastDose");
-                    ol.add(o);
-    		}
+                
+                o[0]=rs.getString("ID");
+                o[1]=rs.getString("studentId");
+                o[2]=rs.getString("vaccineName");
+                o[3]=rs.getString("vaccineId");
+                o[4]=rs.getInt("vaccineCount");
+                o[5]=rs.getString("lastDose");
+                ol.add(o);
+            }
                 
         }catch(SQLException e){
     		e.printStackTrace();
