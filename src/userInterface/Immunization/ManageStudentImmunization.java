@@ -33,6 +33,10 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
         clayout = (CardLayout) container.getLayout();
     }
 
+    public void reloadData(){
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,10 +115,14 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
                 
                 String name=o.toString();
 
-                ViewStudentImmunization vsi = new ViewStudentImmunization(container, name, age);
+                ViewStudentImmunization vsi = new ViewStudentImmunization(container, name, age, Integer.valueOf(studentId));
                 
                 // TODO remove
-                SqliteController.generateVaccineRecordsForStudent(studentId);
+                if(!SqliteController.areVaccineRecordsPresentForStudent(studentId)){
+                    System.out.println("Generating vaccine records for student: "+studentId);
+                    SqliteController.generateVaccineRecordsForStudent(studentId);
+                }
+                
                 vsi.setTableUpcoming(SqliteController.getAllVaccineRecordsForStudent(studentId));
                 
                 container.add(vsi);
@@ -134,6 +142,10 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
     //import value from database
     public void setTable(List<Object[]> ol){
         DefaultTableModel tableModel=(DefaultTableModel) StudentTable.getModel();
+        
+        if(tableModel.getRowCount() > 0){
+            tableModel.removeRow(0);
+        }
         tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Gender","Registered date"}); 
         ol.forEach((e)-> {tableModel.addRow(e);});
         StudentTable.setModel(tableModel);

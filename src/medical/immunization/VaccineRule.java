@@ -13,17 +13,22 @@ import java.util.Map;
  */
 public class VaccineRule {
     
-    Map<VaccineEnum, Integer> requirements;
+    Map<String, Integer> requirements;
     
     VaccineRule(){
         requirements = new HashMap<>();
     }
     
     public void addRule(VaccineEnum v, Integer requiredCount){
-        requirements.put(v, requiredCount);
+        requirements.put(String.valueOf(v).toLowerCase(), requiredCount);
     }
     
     public int getDoseRequired(VaccineEnum v){
-        return requirements.get(v);
+        
+        if(!requirements.containsKey(String.valueOf(v).toLowerCase())){
+            return 0;
+        }
+        
+        return requirements.get(String.valueOf(v).toLowerCase());
     }
 }
