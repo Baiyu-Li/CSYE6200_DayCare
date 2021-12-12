@@ -33,9 +33,7 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
     String currentStudentName;
     int age;
     int studentId;
-    
-    int updateRow = -1;
-    
+        
     /**
      * Creates new form manageTeacher
      */
@@ -128,11 +126,7 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
         if(!RecordTable2.getSelectionModel().isSelectionEmpty()){
             int row = RecordTable2.getSelectedRow();
             Object o = RecordTable2.getModel().getValueAt(row, 0);
-            
-            RecordTable2.setEditingRow(row);
-            
-            updateRow = row;
-                        
+                                                
             if(o !=null){
                 
                 String name=o.toString();
@@ -186,7 +180,7 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
             row[1] = o[4];//vaccine count
             row[2] = VaccineRules.getRuleForAge(age).getDoseRequired(VaccineEnum.valueOf(vaccineName));
             row[3] = o[5];//previous dose date
-            row[4] = (o[5] != null && !o[5].equals("N/A") && (int)row[1] < (int)row[2]) 
+            row[4] = (o[5] != null && !o[5].equals("") && !o[5].equals("N/A") && (int)row[1] < (int)row[2]) 
                     ? isPastOneYear(String.valueOf(o[5])) 
                     : false;
             row[5] = o[0];
