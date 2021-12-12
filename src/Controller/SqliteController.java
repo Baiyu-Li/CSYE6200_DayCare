@@ -16,6 +16,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import medical.immunization.IDGenerator;
+import medical.immunization.VaccineEnum;
+import medical.immunization.VaccineRecord;
     
 /**
  *
@@ -188,6 +191,7 @@ public class SqliteController {
     		closeDB();
     	}
     }
+
     
     public static List<Object[]> getAllTeacher(){
         connDB();
@@ -458,6 +462,123 @@ public class SqliteController {
     		closeDB();
     	}
         return i;
+    }
+    
+    
+    public static void createVaccineRecordTable(){
+        connDB();
+        //String dsql="drop table if exists Subject";
+        String sql="create table IF NOT EXISTS VaccineRecord "
+                + "(ID VARCHAR(45) PRIMARY KEY,"
+                + "studentId INTEGER,"
+                + "vaccineName VARCHAR(45),"
+                + " vaccineCount INTEGER,"
+                + "vaccineId INTEGER,"
+                + "lastDoseDate VARCHAR(45)) ";
+        try{
+            //stmt.executeUpdate(dsql);
+            stmt.execute(sql);
+        }catch(SQLException e){
+    		e.printStackTrace();
+    	}finally{
+    		closeDB();
+    	}
+    }
+    
+    public static List<Object[]> getAllStudents(){
+        connDB();
+        List<Object[]> ol=new ArrayList<>();
+        Object[] o=new Object[6];
+        o[0]="123";//id
+        o[1]="max";//firstname
+        o[2]="John";//last name
+        o[3]=19;//age
+        o[4]="Male";//gender
+        o[5]="2021-12-12"; //lastdate
+        ol.add(o);
+        return ol;
+    }
+    
+    public static void generateVaccineRecordsForStudent(String studentId){
+        
+        connDB();
+        
+         try{
+            String sql="INSERT INTO VaccineRecord (ID,studentId,vaccineName,vaccineCount,vaccineId,lastDoseDate)"
+                    + " VALUES (?,?,?,?,?,?)";
+            
+
+            for (VaccineEnum v : VaccineEnum.values()) {
+                pstm=conn.prepareStatement(sql);
+                pstm.setString(1, IDGenerator.getId());
+                pstm.setString(2, studentId);
+                pstm.setString(3, v.toString());
+                pstm.setInt(4, 0);
+                pstm.setString(5, null);
+                pstm.setString(6, null);
+                pstm.executeUpdate();
+                //stmt.executeUpdate(sql);
+            }
+        }catch(SQLException e){
+    		e.printStackTrace();
+    	}finally{
+    		closeDB();
+    	}
+        
+    }
+    
+    public static void updateVaccineRecordsForStudent(String id, String newDate){
+        
+        connDB();
+        
+         try{
+            String sql="Update VaccineRecord "
+                    + " set lastDoseDate = '"+newDate+"', "
+                    + " vaccineCount = vaccineCount + 1 "
+                    + " where id = '"+id+"'";
+            pstm=conn.prepareStatement(sql);
+            pstm.executeUpdate();
+
+        }catch(SQLException e){
+    		e.printStackTrace();
+    	}finally{
+    		closeDB();
+    	}
+        
+    }
+    
+    public static List<Object[]> getAllVaccineRecordsForStudent(String studentId){
+        connDB();
+        
+        String sql="SELECT vr.ID as ID,"
+                + "vr.studentId as studentId,"
+                + "vr.vaccineName as vaccineName,"
+                + "vr.vaccineId as vaccineId,"
+                + "vr.lastDoseDate as lastDose ,"
+                + "vr.vaccineCount as vaccineCount "
+                + "FROM VaccineRecord vr "
+                + " where vr.studentId = '"+studentId+"'";
+        List<Object[]> ol=new ArrayList<>();
+        try{
+            rs=stmt.executeQuery(sql);
+                Object[] o=new Object[7];
+    		while(rs.next()){
+                    
+                    o[0]=rs.getString("ID");
+                    o[1]=rs.getString("studentId");
+                    o[2]=rs.getString("vaccineName");
+                    o[3]=rs.getString("vaccineId");
+                    o[4]=rs.getInt("vaccineCount");
+                    o[5]=rs.getString("lastDose");
+                    ol.add(o);
+    		}
+                
+        }catch(SQLException e){
+    		e.printStackTrace();
+    	}finally{
+    		closeDB();
+    	}
+        return ol;
     }
     
 }

@@ -55,10 +55,7 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
         StudentTable.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         StudentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "FirstName", "LastName", "Age", "Gender", "RegisteredDate"
@@ -104,15 +101,27 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
 
         
         if(!StudentTable.getSelectionModel().isSelectionEmpty()){
-            int row=StudentTable.getSelectedRow();
-            Object o=StudentTable.getModel().getValueAt(row, 1);
-            if(o !=null){
-                int sid=Integer.parseInt(o.toString());
+            int row = StudentTable.getSelectedRow();
+            Object o = StudentTable.getModel().getValueAt(row, 1);
+            
+            String studentId = (String)StudentTable.getModel().getValueAt(row, 0);
+            Integer age = (Integer)StudentTable.getModel().getValueAt(row, 3);
+            
+            if(o != null){
+                
                 String name=o.toString();
 
-                ViewStudentImmunization vsi = new ViewStudentImmunization(container, name);
-
-                clayout.show(container, "viewStudentImmunizationJPanel");
+                ViewStudentImmunization vsi = new ViewStudentImmunization(container, name, age);
+                
+                // TODO remove
+                SqliteController.generateVaccineRecordsForStudent(studentId);
+                vsi.setTableUpcoming(SqliteController.getAllVaccineRecordsForStudent(studentId));
+                
+                container.add(vsi);
+                CardLayout layout = (CardLayout) container.getLayout();
+                layout.next(container);
+                
+//                clayout.show(container, "viewStudentImmunizationJPanel");
                 
             }
         }else{
@@ -125,9 +134,9 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
     //import value from database
     public void setTable(List<Object[]> ol){
         DefaultTableModel tableModel=(DefaultTableModel) StudentTable.getModel();
-        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Subject"}); 
+        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Gender","Registered date"}); 
         ol.forEach((e)-> {tableModel.addRow(e);});
-       StudentTable.setModel(tableModel);
+        StudentTable.setModel(tableModel);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
