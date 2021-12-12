@@ -16,6 +16,20 @@ import java.util.logging.Logger;
  */
 public class DateConverter {
     
+    public static boolean isValidString(String date){
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+       
+        try {
+            sdf.parse(date);
+        } catch (ParseException ex) {
+            Logger.getLogger(DateConverter.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
+        
+    }
+    
     public static Date getDateFromString(String date){
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

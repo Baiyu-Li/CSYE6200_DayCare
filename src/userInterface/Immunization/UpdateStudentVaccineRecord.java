@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import medical.immunization.DateConverter;
 import medical.immunization.VaccineEnum;
 import medical.immunization.VaccineRecord;
 import medical.immunization.VaccineRules;
@@ -56,7 +57,7 @@ public class UpdateStudentVaccineRecord extends javax.swing.JPanel {
         jLabel7.setText("Manage Immunization records for: "+currentStudentName);
                 
         this.vaccineName = vaccineName;
-        this.doseDate = doseDate == null ? "N/A" : doseDate;
+        this.doseDate = doseDate;
         this.vaccineCount = count;
         this.reqCount = reqCount;
         this.vaccineRecordId = vrId;
@@ -68,6 +69,17 @@ public class UpdateStudentVaccineRecord extends javax.swing.JPanel {
         
     }
 
+    public boolean isValidNumber(String number){
+        
+        try{
+            Integer.parseInt(number);
+        } catch(NumberFormatException ne){
+            ne.printStackTrace();
+            return false;
+        }
+        
+        return true;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -145,6 +157,18 @@ public class UpdateStudentVaccineRecord extends javax.swing.JPanel {
         // TODO add your handling code here:
         //((ViewStudent)this.container.getComponent(7)).setTable(SqliteController.getAllTeacher());
         
+        
+        if(!isValidNumber(this.vaccineCountField.getText())){
+            
+            JOptionPane.showMessageDialog(null, "Please enter a correct vaccine count");
+            return;
+        }
+        
+        if(!DateConverter.isValidString(this.lastDostDate1.getText())){
+            
+            JOptionPane.showMessageDialog(null, "Please enter a correct date");
+            return;
+        }
         
         
        SqliteController.updateVaccineRecordsForStudent(vaccineRecordId, this.lastDostDate1.getText(), Integer.valueOf(this.vaccineCountField.getText()));

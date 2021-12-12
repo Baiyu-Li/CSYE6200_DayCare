@@ -9,10 +9,14 @@ import userInterface.Student.*;
 import userInterface.Teacher.*;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import medical.immunization.DateConverter;
 import medical.immunization.VaccineEnum;
 import medical.immunization.VaccineRecord;
 import medical.immunization.VaccineRules;
@@ -120,9 +124,6 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
     private void tbnView1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnView1ActionPerformed
         // TODO add your handling code here:
         //((ViewStudent)this.container.getComponent(7)).setTable(SqliteController.getAllTeacher());
-        
-        
-       
 
         if(!RecordTable2.getSelectionModel().isSelectionEmpty()){
             int row = RecordTable2.getSelectedRow();
@@ -185,13 +186,32 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
             row[1] = o[4];//vaccine count
             row[2] = VaccineRules.getRuleForAge(age).getDoseRequired(VaccineEnum.valueOf(vaccineName));
             row[3] = o[5];//previous dose date
-            row[4] = false;
+            row[4] = (o[5] != null && !o[5].equals("N/A") && (int)row[1] < (int)row[2]) 
+                    ? isPastOneYear(String.valueOf(o[5])) 
+                    : false;
             row[5] = o[0];
             
             tableModel.addRow(row);
         }
         
        RecordTable2.setModel(tableModel);
+    }
+    
+    
+    public boolean isPastOneYear(String date){
+        
+        Date current = DateConverter.getDateFromString(date);
+        
+        LocalDate today = LocalDate.now();
+
+        Date oneYearPrev = Date.from(today.minusYears(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        
+        if(current.before(oneYearPrev)){
+            return true;
+        }
+        
+        return false;
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
