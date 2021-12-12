@@ -465,6 +465,12 @@ public class SqliteController {
     }
     
     
+    /*
+    
+    Immunization code - Floyed
+    
+    */
+    
     public static void createVaccineRecordTable(){
         connDB();
         //String dsql="drop table if exists Subject";
