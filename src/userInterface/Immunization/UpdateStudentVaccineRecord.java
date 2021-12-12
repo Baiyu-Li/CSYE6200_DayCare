@@ -65,7 +65,7 @@ public class UpdateStudentVaccineRecord extends javax.swing.JPanel {
         this.vaccineCountField.setText(String.valueOf(vaccineCount));
         this.vaccineNameField.setText(String.valueOf(this.vaccineName));
         this.reqCountField.setText(String.valueOf(this.reqCount));
-        this.lastDostDate1.setText(String.valueOf(this.doseDate));
+        this.lastDostDate1.setText(String.valueOf(this.doseDate == null ? "" : this.doseDate));
         
     }
 
@@ -158,13 +158,17 @@ public class UpdateStudentVaccineRecord extends javax.swing.JPanel {
         //((ViewStudent)this.container.getComponent(7)).setTable(SqliteController.getAllTeacher());
         
         
-        if(!isValidNumber(this.vaccineCountField.getText())){
+        if(this.vaccineCountField.getText() != null 
+                && !this.vaccineCountField.getText().equals("")
+                && !isValidNumber(this.vaccineCountField.getText())){
             
             JOptionPane.showMessageDialog(null, "Please enter a correct vaccine count");
             return;
         }
         
-        if(!DateConverter.isValidString(this.lastDostDate1.getText())){
+        if(this.lastDostDate1.getText() != null 
+                && !this.lastDostDate1.getText().equals("") &&
+                !DateConverter.isValidString(this.lastDostDate1.getText())){
             
             JOptionPane.showMessageDialog(null, "Please enter a correct date");
             return;
