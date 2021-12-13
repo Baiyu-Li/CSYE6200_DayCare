@@ -62,14 +62,14 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID", "FirstName", "LastName", "Age", "Gender", "RegisteredDate"
+                "ID", "FirstName", "LastName", "Age", "Gender"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false, true
+                true, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -151,10 +151,10 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
     public void setTable(List<Object[]> ol){
         DefaultTableModel tableModel=(DefaultTableModel) StudentTable.getModel();
         
-        if(tableModel.getRowCount() > 0){
+        while(tableModel.getRowCount() > 0){
             tableModel.removeRow(0);
         }
-        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Gender","Registered date"}); 
+        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Gender"}); 
         ol.forEach((e)-> {tableModel.addRow(e);});
         StudentTable.setModel(tableModel);
     }

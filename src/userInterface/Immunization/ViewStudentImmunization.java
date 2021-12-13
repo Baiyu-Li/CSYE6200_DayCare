@@ -170,6 +170,10 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
         DefaultTableModel tableModel=(DefaultTableModel) RecordTable2.getModel();
         tableModel.setColumnIdentifiers(new Object[]{"vaccineName", "vaccineCount", "requiredDose", "previousDoseDate", "due","ID"});
         
+        while(tableModel.getRowCount() > 0){
+            tableModel.removeRow(0);
+        }
+        
         for(Object[] o : ol){
             
             String vaccineName = String.valueOf(o[2]);
