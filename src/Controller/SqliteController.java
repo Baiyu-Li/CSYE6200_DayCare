@@ -1147,7 +1147,7 @@ public class SqliteController {
         Connection conn = dbConn.getConn();
         String sql = "SELECT * FROM StudentSubject AS ss " +
                 "LEFT JOIN Person AS p ON p.id = ss.id  " +
-                "LEFT JOIN VaccineRecord AS vr ON vr.studentId = p.id " +
+//                "LEFT JOIN VaccineRecord AS vr ON vr.studentId = p.id " +
                 "WHERE p.PIdentity = ?";
         List<Object[]> ol = new ArrayList<>();
         try {
@@ -1156,13 +1156,13 @@ public class SqliteController {
             ResultSet rs = pstm.executeQuery();
             dbConn.setRs(rs);
             while (rs.next()) {
-                Object[] o = new Object[6];
+                Object[] o = new Object[5];
                 o[0] = rs.getInt("id");
                 o[1] = rs.getString("fName");
                 o[2] = rs.getString("lName");
                 o[4] = rs.getString("gender");
                 o[3] = rs.getInt("Age");
-                o[5] = rs.getString("lastDoseDate");
+//                o[5] = rs.getString("lastDoseDate");
                 ol.add(o);
             }
         } catch (SQLException e) {
@@ -1178,14 +1178,11 @@ public class SqliteController {
         DbConn dbConn = connDB();
         Connection conn = dbConn.getConn();
          try{
-             String sql = "SELECT v.id FROM VaccineRecord v" ;
- //                + " WHERE vr.studentId = '"+studentId+"'";
- //            stmt=conn.prepareStatement(sql);
-            //PreparedStatement pstm = conn.prepareStatement(sql);
-             //pstm=conn.prepareStatement(sql);
- //            pstm.executeUpdate();
-            Statement stmt=dbConn.getStmt();
-             ResultSet rs=stmt.executeQuery(sql);
+             String sql = "SELECT vr.ID FROM VaccineRecord vr " 
+                 + " WHERE vr.studentId = '"+studentId+"'";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+                         ResultSet rs = pstm.executeQuery();
+
              Object o = rs.next();
 
              if(o instanceof Boolean){
