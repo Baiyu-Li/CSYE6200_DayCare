@@ -39,7 +39,16 @@ public class Course extends AbstractOrganization{
         this.subID=subID;
         this.tID=tID;
     }
-    
+    public Course(int cid, String cName, String startdate, String enddate, String starttime, String endtime, String weekofday, String location) {
+        this.cid = cid;
+        this.cName = cName;
+        this.startdate = startdate;
+        this.enddate = enddate;
+        this.starttime = starttime;
+        this.endtime = endtime;
+        this.weekofday = weekofday;
+        this.location = location;
+    }
     //get data value
     public int getCourseId(){
         return this.cid;
@@ -70,6 +79,12 @@ public class Course extends AbstractOrganization{
     }
     public int getteacherID(){
         return this.tID;
+    }
+     public void setSubjectId(int subjectId) {
+        this.subID = subjectId;
+    }
+     public void setTid(int tid) {
+        this.tID = tid;
     }
     @Override
     public void showOrganization(){

@@ -23,9 +23,13 @@ public class MainController {
         mframe.teacherShow(e-> {
             manageteacher=(ManageTeacher)this.container.getComponent(1);
             //pass list<object[]>(by resultset) to settable()
-            manageteacher.setTable(SqliteController.getAllTeacher());
+            manageteacher.refreshTable();
         });
        
+    }
+    
+    public void addCoursesFromCSV(){
+        
     }
     
 }

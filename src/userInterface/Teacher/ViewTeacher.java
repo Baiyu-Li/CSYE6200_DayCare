@@ -5,29 +5,67 @@
 package userInterface.Teacher;
 
 import Controller.SqliteController;
+import Model.Organization.Course;
+import Model.Person.Teacher;
+
 import java.awt.CardLayout;
-import java.awt.Component;
 import java.util.List;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
  * @author 83715
  */
 public class ViewTeacher extends javax.swing.JPanel {
 
-    JPanel container;
-    
+    JPanel rightPanel;
+    int teacherId;
+    Teacher teacher;
+    static int selectedcid;
+    private CardLayout clayout;
+
     /**
      * Creates new form manageTeacher
      */
-    private CardLayout clayout;
-    public ViewTeacher(JPanel container) {
-        initComponents();     
-        this.container = container;
-        SqliteController.test();
-        clayout = (CardLayout) container.getLayout();
+    public ViewTeacher(JPanel rp) {
+        initComponents();
+        rightPanel = rp;
+        clayout=(CardLayout)rightPanel.getLayout();
+       
+        
+    }
+    public void setTeacherID(int id){
+        this.teacherId = id;
+        teacher = SqliteController.getTeacherModelById(teacherId);
+        populateData();
+    }
+    private void populateData() {
+        if (teacher == null) {
+            JOptionPane.showMessageDialog(null, "Teacher has deleted, try back.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        txtId.setText(String.valueOf(teacherId));
+        txtAge.setText(String.valueOf(teacher.getAge()));
+        txtFname.setText(teacher.getfName());
+        txtLname.setText(teacher.getlName());
+        cmbGender.setSelectedItem(teacher.getGender());
+        List<Object[]> ol=SqliteController.getCourseByTeacherId(teacherId);
+        if (ol == null) {
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int size = model.getRowCount();
+        for (int i = 0; i < size; i++) {
+            model.removeRow(0);
+        }
+        ol.forEach((e)-> {model.insertRow(ol.indexOf(e),e);});
+        jTable1.setModel(model);
+        /*Object[] row = new Object[2];
+        row[0] = course.getCourseId();
+        row[1] = course.getCourseName();
+        model.addRow(row);
+        */
+        
     }
 
     /**
@@ -39,87 +77,67 @@ public class ViewTeacher extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnUpdate = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        btnBack1 = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        btnStudentList = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtAge = new javax.swing.JTextField();
         txtLname = new javax.swing.JTextField();
         txtFname = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        cmbGender = new javax.swing.JComboBox<>();
+        btnUpdate1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(820, 520));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnUpdate.setBackground(new java.awt.Color(255, 255, 255));
-        btnUpdate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnUpdate.setText("Update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setBackground(new java.awt.Color(255, 255, 255));
+        btnBack.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnBack.setText("<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
-        add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, 110, -1));
+        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, -1));
 
-        btnSave.setBackground(new java.awt.Color(255, 255, 255));
-        btnSave.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnSave.setText("Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
+        btnStudentList.setBackground(new java.awt.Color(255, 255, 255));
+        btnStudentList.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnStudentList.setText(" Student List");
+        btnStudentList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                btnStudentListActionPerformed(evt);
             }
         });
-        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 340, 110, -1));
+        add(btnStudentList, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, 150, -1));
 
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel4.setText("ID");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, -1, -1));
-
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel7.setText("Teacher Detail");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, -1, -1));
-
-        txtId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
-            }
-        });
-        add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 40, -1));
-
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel1.setText("Age Range");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, -1, -1));
-
-        btnBack1.setBackground(new java.awt.Color(255, 255, 255));
-        btnBack1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnBack1.setText("<< Back");
-        btnBack1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBack1ActionPerformed(evt);
-            }
-        });
-        add(btnBack1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, -1));
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel2.setText("Involved Subject");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("First Name");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, -1, 20));
+
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel4.setText("ID");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Age");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, -1, 20));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Gender");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, -1, -1));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, -1, 20));
 
         txtAge.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtAge.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +145,7 @@ public class ViewTeacher extends javax.swing.JPanel {
                 txtAgeActionPerformed(evt);
             }
         });
-        add(txtAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 230, 100, -1));
+        add(txtAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 100, 30));
 
         txtLname.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtLname.addActionListener(new java.awt.event.ActionListener() {
@@ -135,7 +153,7 @@ public class ViewTeacher extends javax.swing.JPanel {
                 txtLnameActionPerformed(evt);
             }
         });
-        add(txtLname, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, 100, -1));
+        add(txtLname, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, 100, 30));
 
         txtFname.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtFname.addActionListener(new java.awt.event.ActionListener() {
@@ -143,56 +161,74 @@ public class ViewTeacher extends javax.swing.JPanel {
                 txtFnameActionPerformed(evt);
             }
         });
-        add(txtFname, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 100, -1));
+        add(txtFname, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 100, 30));
 
-        jComboBox1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 280, 128, -1));
-
-        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jRadioButton1.setText("M");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Course Id", "Course Name"
             }
-        });
-        add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, -1, -1));
+        ));
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
 
-        jRadioButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jRadioButton2.setText("F");
-        add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, 620, 100));
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel7.setText("Teacher Detail");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel8.setText("Last Name");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, -1, 20));
+
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
+        add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, 80, -1));
+
+        cmbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
+        add(cmbGender, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 100, 30));
+
+        btnUpdate1.setBackground(new java.awt.Color(255, 255, 255));
+        btnUpdate1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnUpdate1.setText("Update");
+        btnUpdate1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdate1ActionPerformed(evt);
+            }
+        });
+        add(btnUpdate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 140, 110, 30));
     }// </editor-fold>//GEN-END:initComponents
-  
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdActionPerformed
+        ((ManageTeacher)this.rightPanel.getComponent(1)).refreshTable();
+        clayout.show(rightPanel, "teacherManage");
+    }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+    private void btnStudentListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentListActionPerformed
         // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
-        txtFname.setEditable(true);
-        txtLname.setEditable(true);
-        txtAge.setEditable(true);
-
-        btnSave.setEnabled(true);
-        btnUpdate.setEnabled(false);
-    }//GEN-LAST:event_btnUpdateActionPerformed
-
-    private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
-        // TODO add your handling code here:
-        ((ManageTeacher)this.container.getComponent(1)).setTable(SqliteController.getAllTeacher());
-        clayout.show(container, "teacherManage");
-    }//GEN-LAST:event_btnBack1ActionPerformed
+        int row = jTable1.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        selectedcid = (int) jTable1.getValueAt(row, 0);
+        StudentList sl=(StudentList)this.rightPanel.getComponent(11);
+        sl.setCourseID(selectedcid);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.show(rightPanel,"StudentList");
+    }//GEN-LAST:event_btnStudentListActionPerformed
 
     private void txtAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAgeActionPerformed
         // TODO add your handling code here:
@@ -206,24 +242,43 @@ public class ViewTeacher extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFnameActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_txtIdActionPerformed
+
+    private void btnUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate1ActionPerformed
+        // TODO add your handling code here:
+        if (txtFname.getText() == null || txtFname.getText().isEmpty()
+                || txtLname.getText() == null || txtLname.getText().isEmpty()
+                || cmbGender.getSelectedItem() == null || cmbGender.getSelectedItem().toString().isEmpty()
+                || txtAge.getText() == null || txtAge.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sorry, the text box cannot be empty.");
+            return;
+        }
+        boolean result = SqliteController.updateTeacher(teacherId, txtFname.getText(), txtLname.getText(),
+                Integer.parseInt(txtAge.getText()), cmbGender.getSelectedItem().toString());
+        if (result){
+            JOptionPane.showMessageDialog(this, "Teacher's update is successful!");
+        }else{
+            JOptionPane.showMessageDialog(this, "Teacher's update is fail!");
+        }
+    }//GEN-LAST:event_btnUpdate1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBack1;
-    private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnStudentList;
+    private javax.swing.JButton btnUpdate1;
+    private javax.swing.JComboBox<String> cmbGender;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtFname;
     private javax.swing.JTextField txtId;

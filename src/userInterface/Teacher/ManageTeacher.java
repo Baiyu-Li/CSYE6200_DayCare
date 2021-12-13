@@ -5,29 +5,45 @@
 package userInterface.Teacher;
 
 import Controller.SqliteController;
+import Model.Person.Teacher;
+
 import java.awt.CardLayout;
 import java.util.List;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import userInterface.Student.ManageStudent;
 
 /**
- *
  * @author 83715
  */
 public class ManageTeacher extends javax.swing.JPanel {
 
-    JPanel container;
-    
+    static JPanel rightPanel;
+    static int tid;
     /**
      * Creates new form manageTeacher
      */
-    private CardLayout clayout;
-    public ManageTeacher(JPanel container) {
-        initComponents();     
-        this.container = container;
-        SqliteController.test();
-        clayout = (CardLayout) container.getLayout();
+    public ManageTeacher(JPanel rp) {
+        initComponents();
+        rightPanel = rp;
+        refreshTable();
+    }
+
+    public void refreshTable() {
+        DefaultTableModel model = (DefaultTableModel) TeacherTable.getModel();
+        int size = model.getRowCount();
+        for (int i = 0; i < size; i++) {
+            model.removeRow(0);
+        }
+        List<Teacher> teacherList = SqliteController.getAllTeacherModel();
+        for (Teacher teacher : teacherList) {
+            Object[] row = new Object[5];
+            row[0] = teacher.getId();
+            row[1] = teacher.getfName();
+            row[2] = teacher.getlName();
+            row[3] = teacher.getAge();
+            row[4] = teacher.getGender();
+            model.addRow(row);
+        }
     }
 
     /**
@@ -45,7 +61,6 @@ public class ManageTeacher extends javax.swing.JPanel {
         btnDelete = new javax.swing.JButton();
         tbnView = new javax.swing.JButton();
         tbnEnrollTeacher = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(650, 400));
@@ -60,7 +75,7 @@ public class ManageTeacher extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "FirstName", "LastName", "Age", "Group"
+                "ID", "FirstName", "LastName", "Age", "Gender"
             }
         ) {
             Class[] types = new Class [] {
@@ -79,12 +94,16 @@ public class ManageTeacher extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(TeacherTable);
+        if (TeacherTable.getColumnModel().getColumnCount() > 0) {
+            TeacherTable.getColumnModel().getColumn(0).setMaxWidth(50);
+            TeacherTable.getColumnModel().getColumn(3).setMaxWidth(50);
+        }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, 190));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 620, 190));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Manage Teacher ");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, -1, -1));
 
         btnDelete.setBackground(new java.awt.Color(255, 255, 255));
         btnDelete.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -94,7 +113,7 @@ public class ManageTeacher extends javax.swing.JPanel {
                 btnDeleteActionPerformed(evt);
             }
         });
-        add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, 80, -1));
+        add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 80, -1));
 
         tbnView.setBackground(new java.awt.Color(255, 255, 255));
         tbnView.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -114,51 +133,72 @@ public class ManageTeacher extends javax.swing.JPanel {
                 tbnEnrollTeacherActionPerformed(evt);
             }
         });
-        add(tbnEnrollTeacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, 130, -1));
-
-        jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setText("Update >1 year");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-        add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, -1, -1));
+        add(tbnEnrollTeacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 320, 130, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code her
+        int row = TeacherTable.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int id = Integer.parseInt((String) TeacherTable.getValueAt(row, 0));
+        Teacher teacher = SqliteController.getTeacherModelById(id);
+        if (teacher == null) {
+            JOptionPane.showMessageDialog(null, "Teacher has deleted", "Warning", JOptionPane.WARNING_MESSAGE);
+            refreshTable();
+            return;
+        }
+        if (teacher.getCourse() != null) {
+            JOptionPane.showMessageDialog(null, "Teacher has course, can`t delete", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        boolean result = SqliteController.deleteTeacher(id);
+        if (result) {
+            JOptionPane.showMessageDialog(this, "Teacher's delete is successful!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Teacher's delete is fail!");
+        }
         
+        refreshTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void tbnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnViewActionPerformed
         // TODO add your handling code here:
-        //(ViewTeacher)this.container.getComponent(13)).setTable(SqliteController.getAllTeacher());
-        clayout.show(container, "viewTeacherJPanel");
+        int row = TeacherTable.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }else{
+        tid = Integer.parseInt(TeacherTable.getValueAt(row, 0).toString());
+        ViewTeacher vt=(ViewTeacher)this.rightPanel.getComponent(10);
+        vt.setTeacherID(tid);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.show(rightPanel,"viewTeacherJPanel");
+        }
     }//GEN-LAST:event_tbnViewActionPerformed
 
     private void tbnEnrollTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnEnrollTeacherActionPerformed
         // TODO add your handling code here:
-        //((EnrollTeacher)this.container.getComponent(14)).setTable(SqliteController.getAllTeacher());
-        clayout.show(container, "enrollTeacherJPanel");
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.show(rightPanel,"enrollTeacherJPanel");
     }//GEN-LAST:event_tbnEnrollTeacherActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-    
-    
+
     //import value from database
-    public void setTable(List<Object[]> ol){
-        DefaultTableModel tableModel=(DefaultTableModel) TeacherTable.getModel();
-        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Group"}); 
-        ol.forEach((e)-> {tableModel.addRow(e);});
-       TeacherTable.setModel(tableModel);
-    }
+    //public void setTable(List<Object[]> ol) {
+//        DefaultTableModel tableModel = (DefaultTableModel) TeacherTable.getModel();
+//        tableModel.setColumnIdentifiers(new Object[]{"ID", "FirstName", "LastName", "Age", "Gender"});
+//        ol.forEach((e) -> {
+//            tableModel.addRow(e);
+//        });
+//        TeacherTable.setModel(tableModel);
+   // }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TeacherTable;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton tbnEnrollTeacher;

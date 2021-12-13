@@ -53,7 +53,7 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(650, 400));
-        setPreferredSize(new java.awt.Dimension(650, 400));
+        setPreferredSize(new java.awt.Dimension(820, 520));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         StudentTable.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -66,7 +66,7 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 true, false, false, false, false, true
@@ -81,22 +81,28 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(StudentTable);
+        if (StudentTable.getColumnModel().getColumnCount() > 0) {
+            StudentTable.getColumnModel().getColumn(0).setMaxWidth(60);
+            StudentTable.getColumnModel().getColumn(3).setPreferredWidth(60);
+            StudentTable.getColumnModel().getColumn(3).setMaxWidth(60);
+            StudentTable.getColumnModel().getColumn(4).setMaxWidth(90);
+        }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 600, 190));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 600, 190));
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel1.setText("Manage Immunization records for students");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel1.setText("Manage Immunization Records for Student");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, -1, -1));
 
         tbnView1.setBackground(new java.awt.Color(255, 255, 255));
         tbnView1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tbnView1.setText("View/Manage vaccine information");
+        tbnView1.setText("View/Manage Vaccine Information");
         tbnView1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbnView1ActionPerformed(evt);
             }
         });
-        add(tbnView1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 320, 250, -1));
+        add(tbnView1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 400, 250, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbnView1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbnView1ActionPerformed
@@ -108,8 +114,8 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
             int row = StudentTable.getSelectedRow();
             Object o = StudentTable.getModel().getValueAt(row, 1);
             
-            String studentId = (String)StudentTable.getModel().getValueAt(row, 0);
-            Integer age = (Integer)StudentTable.getModel().getValueAt(row, 3);
+            String studentId = String.valueOf(StudentTable.getModel().getValueAt(row, 0).toString());
+            Integer age = Integer.parseInt(StudentTable.getModel().getValueAt(row, 3).toString());
             
             if(o != null){
                 
@@ -124,10 +130,12 @@ public class ManageStudentImmunization extends javax.swing.JPanel {
                 }
                 
                 vsi.setTableUpcoming(SqliteController.getAllVaccineRecordsForStudent(studentId));
-                
-                container.add(vsi);
+                /*
+                *can't show at first so change to use nickname and use layout.show()
+                */
+                container.add(vsi,"ViewStudentImmunization");
                 CardLayout layout = (CardLayout) container.getLayout();
-                layout.next(container);
+                layout.show(container,"ViewStudentImmunization");
                 
 //                clayout.show(container, "viewStudentImmunizationJPanel");
                 

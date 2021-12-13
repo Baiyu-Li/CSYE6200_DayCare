@@ -4,31 +4,35 @@
  */
 package userInterface.Student;
 
+
 import Controller.SqliteController;
+import Model.Organization.Subject;
+import Model.Person.Student;
 import userInterface.Teacher.*;
+
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- *
  * @author 83715
  */
 public class EnrollStudent extends javax.swing.JPanel {
 
-    JPanel container;
-    
+    JPanel rightPanel;
+
     /**
      * Creates new form manageTeacher
      */
-    
-    private CardLayout clayout;
-    public EnrollStudent(JPanel container) {
-        initComponents();     
-        this.container = container;
-        SqliteController.test();
-        clayout = (CardLayout) container.getLayout();
+    public EnrollStudent(JPanel rp) {
+        initComponents();
+        rightPanel = rp;
+        cmbSubject.setModel(new javax.swing.DefaultComboBoxModel<>(SqliteController.getAllSubjectModel().toArray()));
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,18 +42,14 @@ public class EnrollStudent extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         btnEnroll = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtAge = new javax.swing.JTextField();
-        txtLname = new javax.swing.JTextField();
+        txtNUID = new javax.swing.JTextField();
         txtFname = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -62,13 +62,17 @@ public class EnrollStudent extends javax.swing.JPanel {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         txtAddress = new javax.swing.JTextField();
+        cmbSubject = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        cmbGender = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        txtLname1 = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        txtEntryYear = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel1.setText("Age Range");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
         btnBack.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -78,7 +82,7 @@ public class EnrollStudent extends javax.swing.JPanel {
                 btnBackActionPerformed(evt);
             }
         });
-        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 350, 90, -1));
+        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 90, -1));
 
         btnEnroll.setBackground(new java.awt.Color(255, 255, 255));
         btnEnroll.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -96,11 +100,11 @@ public class EnrollStudent extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Age");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel6.setText("Gender");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+        jLabel6.setText("Subject");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
 
         txtAge.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtAge.addActionListener(new java.awt.event.ActionListener() {
@@ -108,15 +112,15 @@ public class EnrollStudent extends javax.swing.JPanel {
                 txtAgeActionPerformed(evt);
             }
         });
-        add(txtAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 100, -1));
+        add(txtAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 100, -1));
 
-        txtLname.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtLname.addActionListener(new java.awt.event.ActionListener() {
+        txtNUID.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtNUID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLnameActionPerformed(evt);
+                txtNUIDActionPerformed(evt);
             }
         });
-        add(txtLname, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 100, -1));
+        add(txtNUID, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 100, -1));
 
         txtFname.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtFname.addActionListener(new java.awt.event.ActionListener() {
@@ -126,32 +130,13 @@ public class EnrollStudent extends javax.swing.JPanel {
         });
         add(txtFname, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 100, -1));
 
-        jComboBox1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 128, -1));
-
-        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jRadioButton1.setText("M");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-        add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, -1, -1));
-
-        jRadioButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jRadioButton2.setText("F");
-        add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
-
         jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel7.setText("Enroll New Student");
         add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel8.setText("Last Name");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
+        jLabel8.setText("NUID");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setText("Students' Info");
@@ -208,34 +193,98 @@ public class EnrollStudent extends javax.swing.JPanel {
             }
         });
         add(txtAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 220, 260, -1));
+
+        cmbSubject.setModel(new javax.swing.DefaultComboBoxModel<>(new Object[]{}));
+        cmbSubject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSubjectActionPerformed(evt);
+            }
+        });
+        add(cmbSubject, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 100, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, -1, -1));
+
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel11.setText("Gender");
+        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
+
+        cmbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Male", "Female"}));
+        add(cmbGender, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 100, -1));
+
+        jLabel14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel14.setText("Last Name");
+        add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
+
+        txtLname1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtLname1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLname1ActionPerformed(evt);
+            }
+        });
+        add(txtLname1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 100, -1));
+
+        jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel15.setText("Entry Year");
+        add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, -1, -1));
+
+        txtEntryYear.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtEntryYear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEntryYearActionPerformed(evt);
+            }
+        });
+        add(txtEntryYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 100, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        ((ManageStudent)this.container.getComponent(2)).setTable(SqliteController.getAllTeacher());
-        clayout.show(container, "studentManage");
+        ManageStudent etp = new ManageStudent(rightPanel);
+        rightPanel.remove(this);
+        rightPanel.add(etp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.previous(rightPanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
         // TODO add your handling code here:
-        
+        if (txtFname.getText() == null || txtFname.getText().isEmpty()
+                || txtNUID.getText() == null || txtNUID.getText().isEmpty()
+                || cmbGender.getSelectedItem().toString() == null || cmbGender.getSelectedItem().toString().isEmpty()
+                || cmbSubject.getSelectedItem() == null
+                || txtAge.getText() == null || txtAge.getText().isEmpty()
+                || txtFaname.getText() == null || txtFaname.getText().isEmpty()
+                || txtMname.getText() == null || txtMname.getText().isEmpty()
+                || txtPhone.getText() == null || txtPhone.getText().isEmpty()
+                || txtAddress.getText() == null || txtAddress.getText().isEmpty()
+                || txtEntryYear.getText() == null || txtEntryYear.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sorry, the text box cannot be empty.");
+            return;
+        }
+
+        int subjectId = cmbSubject.getSelectedItem() == null ? 0 : ((Subject) cmbSubject.getSelectedItem()).getSubjectID();
+        int id = SqliteController.insertStudent(txtFaname.getText(), txtMname.getText(), txtPhone.getText(),
+                txtAddress.getText(), txtEntryYear.getText(), subjectId, txtFname.getText(), txtLname1.getText(),
+                Integer.parseInt(txtAge.getText()), cmbGender.getSelectedItem().toString());
+
+        if (id > 0) {
+            JOptionPane.showMessageDialog(this, "Student's enrollment is successful!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Student's enrollment is fail!");
+        }
+
+
     }//GEN-LAST:event_btnEnrollActionPerformed
 
     private void txtAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAgeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAgeActionPerformed
 
-    private void txtLnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLnameActionPerformed
+    private void txtNUIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNUIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtLnameActionPerformed
+    }//GEN-LAST:event_txtNUIDActionPerformed
 
     private void txtFnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFnameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFnameActionPerformed
-
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void txtMnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMnameActionPerformed
         // TODO add your handling code here:
@@ -253,15 +302,31 @@ public class EnrollStudent extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAddressActionPerformed
 
+    private void cmbSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSubjectActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbSubjectActionPerformed
+
+    private void txtLname1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLname1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLname1ActionPerformed
+
+    private void txtEntryYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEntryYearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEntryYearActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnEnroll;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbGender;
+    private javax.swing.JComboBox<Object> cmbSubject;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -270,14 +335,14 @@ public class EnrollStudent extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtAge;
+    private javax.swing.JTextField txtEntryYear;
     private javax.swing.JTextField txtFaname;
     private javax.swing.JTextField txtFname;
-    private javax.swing.JTextField txtLname;
+    private javax.swing.JTextField txtLname1;
     private javax.swing.JTextField txtMname;
+    private javax.swing.JTextField txtNUID;
     private javax.swing.JTextField txtPhone;
     // End of variables declaration//GEN-END:variables
 }

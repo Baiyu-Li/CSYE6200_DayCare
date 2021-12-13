@@ -5,12 +5,13 @@
  */
 package Controller;
 
+//import Model.Factory.AbstractFactory;
 import Model.Factory.AbstractFactory;
 import Model.Factory.CourseFactory;
-import Model.Factory.SubjectFactory;
 import Model.Organization.Course;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import userInterface.Course.ManageCourse;
 import userInterface.Course.ViewCourse;
@@ -23,7 +24,6 @@ public class CourseController {
     private JPanel container;
     private AbstractFactory cf;
     public static List<Object[]> clist=new ArrayList<>();
-    public static List<Object[]> cEnrolllist=new ArrayList<>();
     
     public CourseController(JPanel container){
         this.container=container;
@@ -31,27 +31,23 @@ public class CourseController {
     }
     
     public void showCourseTabelfromDB(){
-        clist=SqliteController.getAllCourse();
-        showCoursewithList();
-    }
-    public void showCoursewithList(){
-        ((ManageCourse)this.container.getComponent(3)).setTable(clist);
+        ((ManageCourse)this.container.getComponent(3)).setTable(SqliteController.getAllCourse());
+        
     }
     public void viewCourseEnrollDetailfromDB(int cid){
-        cEnrolllist=SqliteController.getCourseEnrollStudent(cid);
-        viewCourseEnrollDetail();
-    }
-    public void viewCourseEnrollDetail(){
-        ((ViewCourse)this.container.getComponent(4)).setTable(cEnrolllist);
+        ((ViewCourse)this.container.getComponent(4)).setTable(SqliteController.getCourseEnrollStudent(cid));
+        
     }
     public void removeEnrollStudent(int cid,int sid){
         if(SqliteController.deleteEnrollStudent(cid, sid)>0){
             viewCourseEnrollDetailfromDB(cid);
+        }else{
+            JOptionPane.showMessageDialog(null, "Failed to delete");
         }
         
     }
     public void removeCourse(int cid){
-        if(SqliteController.deleteCourseEnrollRow(cid)>0){
+        if(SqliteController.deleteCourseEnrollRow(cid)>=0){
             if(SqliteController.deleteCourseRow(cid)>0){
                 showCourseTabelfromDB();
             }
@@ -63,6 +59,6 @@ public class CourseController {
     }
     
     public int addnewCourse(String s){
-        return SqliteController.insertCourseFactoryTable((Course)(cf.getObject(s)));
+        return SqliteController.insertCourseFactoryTable((Course)(cf.getObjectwithString(s)));
     }
 }

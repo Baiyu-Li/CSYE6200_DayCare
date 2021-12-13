@@ -11,23 +11,19 @@ import Controller.SqliteController;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import medical.immunization.VaccineCSVGenerator;
-import userInterface.Course.AssignStudent;
 import userInterface.Course.EnrollCourse;
 import userInterface.Course.ManageCourse;
 import userInterface.Course.ViewCourse;
 import userInterface.Immunization.ManageStudentImmunization;
-import userInterface.Immunization.ViewStudentImmunization;
-import userInterface.Registration.AnnualRegistration;
-import userInterface.Registration.StudentAnnualRegistration;
-import userInterface.Registration.TeacherAnnualRegistration;
-import userInterface.Student.AddRecord;
+import userInterface.Student.CourseRegistration;
+//import userInterface.Student.AddRecord;
 import userInterface.Student.EnrollStudent;
 import userInterface.Student.ManageStudent;
 import userInterface.Student.ViewStudent;
-import userInterface.Student.ViewStudentRecord;
-import userInterface.Student.ViewStudentUpcomming;
+//import userInterface.Student.ViewStudentImmu;
 import userInterface.Teacher.EnrollTeacher;
 import userInterface.Teacher.ManageTeacher;
+import userInterface.Teacher.StudentList;
 import userInterface.Teacher.ViewTeacher;
 
 /**
@@ -42,63 +38,61 @@ public class MainFrame extends javax.swing.JFrame {
     public CardLayout clayout;
 
     public MainFrame() {
+        SqliteController.test();
         initComponents();
         
         clayout=(CardLayout)container.getLayout();
         //add jpanel to container
+        synchronized(this){
         ManageTeacher mtp = new ManageTeacher(container);
-
         ManageStudent msp = new ManageStudent(container);
-        
-        //Immunization
         ManageStudentImmunization msi = new ManageStudentImmunization(container);
-//        ViewStudentImmunization vsi = new ViewStudentImmunization(container);
-        
         ManageCourse mcp = new ManageCourse(container);
         ViewCourse vcp = new ViewCourse(container);
-        ViewStudentRecord srp = new ViewStudentRecord(container);
-        ViewStudent vsp = new ViewStudent(container);
-        TeacherAnnualRegistration tap = new TeacherAnnualRegistration(container);
-        StudentAnnualRegistration sap = new StudentAnnualRegistration(container);
         EnrollStudent esp = new EnrollStudent(container);
-        ViewStudentUpcomming sup = new ViewStudentUpcomming(container);
-        AddRecord arp = new AddRecord(container);
-        ViewTeacher vtp = new ViewTeacher(container);
         EnrollTeacher etp = new EnrollTeacher(container);
         EnrollCourse ecp = new EnrollCourse(container);
-        AssignStudent asp = new AssignStudent(container);
+        CourseRegistration cr = new CourseRegistration(container);//14->9
+        //AssignStudent asp = new AssignStudent(container);
+        ViewTeacher vtp = new ViewTeacher(container);
+        StudentList sl = new StudentList(container);
+        ViewStudent vs = new ViewStudent(container);
+        //ViewStudentImmu vsip = new ViewStudentImmu(container);
+        
+        String name="";
                         
         container.add("teacherManage", mtp);//1
         container.add("studentManage", msp);//2
-        container.add("immunizationManage", msi);//3
-        container.add("courseManage", mcp);//4
-        container.add("viewCourseJPanel",vcp);//5
-        container.add("viewStudentRecordJPanel",srp);//6
-        container.add("viewStudentJPanel",vsp);//7
-        container.add("TeacherAnnualRegistrationJPanel",tap);//8
-        container.add("StudentAnnualRegistrationJPanel",sap);//9
-        container.add("enrollStudentJPanel",esp);//10
-        container.add("viewStudentUpcommingJPanel",sup);//11
-        container.add("addRecordJPanel",arp);//12
-        container.add("viewTeacherJPanel",vtp);//13
-        container.add("enrollTeacherJPanel",etp);//14
-        container.add("enrollCourseJPanel",ecp);//15
-        container.add("assignStudentJPanel",asp);//16
-        container.add("manageStudentImmunizationJPanel",msi);//17
-//        container.add("viewStudentImmunizationJPanel",vsi);//17
-
+        container.add("courseManage", mcp);//3
+        container.add("viewCourseJPanel",vcp);//4
+        container.add("manageStudentImmunizationJPanel",msi);//5
+        container.add("enrollStudentJPanel",esp);//6
+        container.add("enrollTeacherJPanel",etp);//7
+        container.add("enrollCourseJPanel",ecp);//8
+        container.add("CourseRegistration", cr);//14->9
+        //container.add("assignStudentJPanel",asp);//9
+        container.add("viewTeacherJPanel", vtp);//10
+        container.add("StudentList", sl);//11
+        container.add("ViewStudent", vs);//12
+        //container.add("viewStudentRecordJPanel", vsip);//13
+        
+        }
+        /*
+        for(Component c:container.getComponents()){
+            System.out.println(c.getClass());
+        }
+        */
         MainController mc=new MainController(this,container);
-        SqliteController.test();
+        
         this.teacherShow(e-> clayout.show(container, "teacherManage"));
-        
-        //******************************
-        //initialize immunization requirements
-        //******************************
-        //generate immunization tables
-        SqliteController.createVaccineRecordTable();
-        
-        VaccineCSVGenerator csv = new VaccineCSVGenerator();
-        csv.generateRuleFromSample();
+         //******************************
+         //initialize immunization requirements
+         //******************************
+         //generate immunization tables
+         SqliteController.createVaccineRecordTable();
+
+         VaccineCSVGenerator csv = new VaccineCSVGenerator();
+         csv.generateRuleFromSample();
     }
 
     /**
@@ -112,6 +106,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         container = new javax.swing.JPanel();
         rightPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         logoPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         workPanel = new javax.swing.JPanel();
@@ -119,7 +115,6 @@ public class MainFrame extends javax.swing.JFrame {
         teacher = new javax.swing.JButton();
         student = new javax.swing.JButton();
         course = new javax.swing.JButton();
-        registration = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -129,17 +124,26 @@ public class MainFrame extends javax.swing.JFrame {
 
         rightPanel.setBackground(new java.awt.Color(249, 253, 255));
         rightPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Cooper Black", 0, 48)); // NOI18N
+        jLabel1.setText("Information Management System");
+        rightPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Cooper Black", 0, 48)); // NOI18N
+        jLabel3.setText("Welcome to Northeasten");
+        rightPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, -1, -1));
+
         container.add(rightPanel, "card2");
 
-        getContentPane().add(container, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 650, 400));
+        getContentPane().add(container, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 1140, 570));
 
         logoPanel.setBackground(new java.awt.Color(229, 242, 255));
         logoPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/images.jpeg"))); // NOI18N
-        logoPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, -1, -1));
+        logoPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, -1, -1));
 
-        getContentPane().add(logoPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 650, 90));
+        getContentPane().add(logoPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 1140, 90));
 
         workPanel.setBackground(new java.awt.Color(153, 204, 255));
         workPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -157,12 +161,7 @@ public class MainFrame extends javax.swing.JFrame {
         teacher.setBackground(new java.awt.Color(255, 255, 255));
         teacher.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         teacher.setText("Teacher");
-        teacher.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                teacherActionPerformed(evt);
-            }
-        });
-        workPanel.add(teacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 110, -1));
+        workPanel.add(teacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 110, -1));
 
         student.setBackground(new java.awt.Color(255, 255, 255));
         student.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -172,7 +171,7 @@ public class MainFrame extends javax.swing.JFrame {
                 studentActionPerformed(evt);
             }
         });
-        workPanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 110, -1));
+        workPanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 110, -1));
 
         course.setBackground(new java.awt.Color(255, 255, 255));
         course.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -182,19 +181,9 @@ public class MainFrame extends javax.swing.JFrame {
                 courseActionPerformed(evt);
             }
         });
-        workPanel.add(course, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 110, -1));
+        workPanel.add(course, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 110, -1));
 
-        registration.setBackground(new java.awt.Color(255, 255, 255));
-        registration.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        registration.setText("Registration");
-        registration.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registrationActionPerformed(evt);
-            }
-        });
-        workPanel.add(registration, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 110, -1));
-
-        getContentPane().add(workPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 490));
+        getContentPane().add(workPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 660));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -204,7 +193,7 @@ public class MainFrame extends javax.swing.JFrame {
 //        //container layout show() display panel with name
 //        clayout.show(container, "immunizationManage");
         
-        ((ManageStudentImmunization)this.container.getComponent(16)).setTable(SqliteController.getAllStudents());
+        ((ManageStudentImmunization)this.container.getComponent(5)).setTable(SqliteController.getAllStudents());
         clayout.show(container, "manageStudentImmunizationJPanel");
         
     }//GEN-LAST:event_immunizationActionPerformed
@@ -212,7 +201,7 @@ public class MainFrame extends javax.swing.JFrame {
         teacher.addActionListener(actionListener);
     }
     private void studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentActionPerformed
-        ((ManageStudent)this.container.getComponent(2)).setTable(SqliteController.getAllTeacher());
+        ((ManageStudent)this.container.getComponent(2)).refreshTable();
         clayout.show(container, "studentManage");
         //container.removeAll();
         //container.add(mtp);
@@ -227,28 +216,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void courseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseActionPerformed
         CourseController cc=new CourseController(container);
-        if(CourseController.clist.isEmpty()){
-            cc.showCourseTabelfromDB();
-        }else{
-            cc.showCoursewithList();
-        }
+        cc.showCourseTabelfromDB();
         clayout.show(container, "courseManage");
 
     }//GEN-LAST:event_courseActionPerformed
-
-    private void registrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationActionPerformed
-        // TODO add your handling code here:
-        /*AnnualRegistration mtp = new AnnualRegistration(container);
-        container.removeAll();
-        container.add(mtp);
-        pack();*/
-        /*
-        rightPanel.removeAll();
-        rightPanel.add("AnnualRegistrationJPanel",mtp);
-        CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.last(rightPanel);
-        */
-    }//GEN-LAST:event_registrationActionPerformed
 
     private void teacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacherActionPerformed
         // TODO add your handling code here:
@@ -293,9 +264,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel container;
     private javax.swing.JButton course;
     private javax.swing.JButton immunization;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel logoPanel;
-    private javax.swing.JButton registration;
     private javax.swing.JPanel rightPanel;
     private javax.swing.JButton student;
     private javax.swing.JButton teacher;

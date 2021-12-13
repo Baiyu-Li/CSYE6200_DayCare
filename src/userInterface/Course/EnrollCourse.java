@@ -61,6 +61,7 @@ public class EnrollCourse extends javax.swing.JPanel {
         txtwod = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(820, 520));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnBack.setBackground(new java.awt.Color(255, 255, 255));
@@ -71,7 +72,7 @@ public class EnrollCourse extends javax.swing.JPanel {
                 btnBackActionPerformed(evt);
             }
         });
-        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 90, -1));
+        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 90, -1));
 
         btnEnroll.setBackground(new java.awt.Color(255, 255, 255));
         btnEnroll.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -81,15 +82,15 @@ public class EnrollCourse extends javax.swing.JPanel {
                 btnEnrollActionPerformed(evt);
             }
         });
-        add(btnEnroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 110, -1));
+        add(btnEnroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, 110, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Course Name");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Instructor");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, -1));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, -1, -1));
 
         txtInstructor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtInstructor.addActionListener(new java.awt.event.ActionListener() {
@@ -97,7 +98,7 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtInstructorActionPerformed(evt);
             }
         });
-        add(txtInstructor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 100, -1));
+        add(txtInstructor, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 270, 100, -1));
 
         txtLocation.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtLocation.addActionListener(new java.awt.event.ActionListener() {
@@ -105,7 +106,7 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtLocationActionPerformed(evt);
             }
         });
-        add(txtLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 100, -1));
+        add(txtLocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 100, -1));
 
         txtSdate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtSdate.addActionListener(new java.awt.event.ActionListener() {
@@ -113,25 +114,27 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtSdateActionPerformed(evt);
             }
         });
-        add(txtSdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 100, -1));
+        add(txtSdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 100, -1));
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel7.setText("Create New Course");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel8.setText("Location");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, -1, -1));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 230, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel9.setText("Subject");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, -1, -1));
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 270, 50, -1));
 
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Start Date");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("End Date");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 146, -1, 20));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, -1, 20));
 
         txtEdate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtEdate.addActionListener(new java.awt.event.ActionListener() {
@@ -139,7 +142,7 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtEdateActionPerformed(evt);
             }
         });
-        add(txtEdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 100, -1));
+        add(txtEdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 100, -1));
 
         txtCoursename.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtCoursename.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +150,7 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtCoursenameActionPerformed(evt);
             }
         });
-        add(txtCoursename, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 100, -1));
+        add(txtCoursename, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 100, -1));
 
         txtSubject.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtSubject.addActionListener(new java.awt.event.ActionListener() {
@@ -155,10 +158,11 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtSubjectActionPerformed(evt);
             }
         });
-        add(txtSubject, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 220, 100, -1));
+        add(txtSubject, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 270, 100, -1));
 
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Start Time");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, -1, -1));
 
         txtStime.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtStime.addActionListener(new java.awt.event.ActionListener() {
@@ -166,10 +170,11 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtStimeActionPerformed(evt);
             }
         });
-        add(txtStime, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 100, -1));
+        add(txtStime, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 100, -1));
 
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("End Time");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, -1, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, -1, -1));
 
         txtetime.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtetime.addActionListener(new java.awt.event.ActionListener() {
@@ -177,11 +182,11 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtetimeActionPerformed(evt);
             }
         });
-        add(txtetime, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 140, 100, -1));
+        add(txtetime, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, 100, -1));
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel10.setText("Week of Day");
-        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 230, -1, -1));
 
         txtwod.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtwod.addActionListener(new java.awt.event.ActionListener() {
@@ -189,12 +194,12 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtwodActionPerformed(evt);
             }
         });
-        add(txtwod, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, 100, -1));
+        add(txtwod, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 100, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        ((ManageCourse)this.container.getComponent(4)).setTable(SqliteController.getAllTeacher());
+        ((ManageCourse)this.container.getComponent(3)).setTable(SqliteController.getAllTeacher());
         clayout.show(container, "courseManage");
     }//GEN-LAST:event_btnBackActionPerformed
 
@@ -215,9 +220,10 @@ public class EnrollCourse extends javax.swing.JPanel {
                 .append(txtSubject.getText()).append(",")
                 .append(txtInstructor.getText()).append(",");
             CourseController cc=new CourseController(container);
-            int i=cc.addnewCourse(sb.toString());
+            //int i=cc.addnewCourse(sb.toString());
+            int i=SqliteController.insertCourseTablewithstring(sb.toString());
             if(i==0){
-                System.out.println("fialed to insert new course");
+                JOptionPane.showMessageDialog(null, "fialed to insert new course");
             }else{
                 txtCoursename.setText("");
                 txtSdate.setText("");
@@ -228,7 +234,9 @@ public class EnrollCourse extends javax.swing.JPanel {
                 txtLocation.setText("");
                 txtSubject.setText("");
                 txtInstructor.setText("");
-                System.out.println("insert new course successfuly!");
+                JOptionPane.showMessageDialog(null, "insert new course successfuly!");
+                    cc.showCourseTabelfromDB();
+                clayout.show(container, "courseManage");
             }
         }
     }//GEN-LAST:event_btnEnrollActionPerformed

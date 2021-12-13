@@ -50,7 +50,7 @@ public class ManageCourse extends javax.swing.JPanel {
         tbnEnrollCour = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(650, 400));
+        setPreferredSize(new java.awt.Dimension(820, 520));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         CourseTable.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -81,12 +81,22 @@ public class ManageCourse extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(CourseTable);
+        if (CourseTable.getColumnModel().getColumnCount() > 0) {
+            CourseTable.getColumnModel().getColumn(0).setMaxWidth(25);
+            CourseTable.getColumnModel().getColumn(2).setMinWidth(165);
+            CourseTable.getColumnModel().getColumn(2).setPreferredWidth(165);
+            CourseTable.getColumnModel().getColumn(2).setMaxWidth(165);
+            CourseTable.getColumnModel().getColumn(4).setMinWidth(155);
+            CourseTable.getColumnModel().getColumn(4).setPreferredWidth(155);
+            CourseTable.getColumnModel().getColumn(4).setMaxWidth(155);
+            CourseTable.getColumnModel().getColumn(6).setMaxWidth(150);
+        }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, 190));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 1120, 190));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Manage Course");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, -1));
 
         btnDelete.setBackground(new java.awt.Color(255, 255, 255));
         btnDelete.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -96,7 +106,7 @@ public class ManageCourse extends javax.swing.JPanel {
                 btnDeleteActionPerformed(evt);
             }
         });
-        add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, 80, -1));
+        add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 80, -1));
 
         tbnView.setBackground(new java.awt.Color(255, 255, 255));
         tbnView.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -106,7 +116,7 @@ public class ManageCourse extends javax.swing.JPanel {
                 tbnViewActionPerformed(evt);
             }
         });
-        add(tbnView, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 110, -1));
+        add(tbnView, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 360, 110, -1));
 
         tbnEnrollCour.setBackground(new java.awt.Color(255, 255, 255));
         tbnEnrollCour.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -116,15 +126,15 @@ public class ManageCourse extends javax.swing.JPanel {
                 tbnEnrollCourActionPerformed(evt);
             }
         });
-        add(tbnEnrollCour, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, 130, -1));
+        add(tbnEnrollCour, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, 130, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if(!CourseTable.getSelectionModel().isSelectionEmpty()){
             int row=CourseTable.getSelectedRow();
-            Object o=CourseTable.getModel().getValueAt(row, 1);
+            Object o=CourseTable.getModel().getValueAt(row, 0);
             if(o !=null){
-                int cid=Integer.parseInt(o.toString());
+                int cid=Integer.parseInt(o.toString().trim());
                 CourseController cc=new CourseController(container);
                 cc.removeCourse(cid);
             }else{
@@ -140,17 +150,14 @@ public class ManageCourse extends javax.swing.JPanel {
         CourseController cc=new CourseController(container);
         int row=0;
         if(!CourseTable.getSelectionModel().isSelectionEmpty()){
-            row=CourseTable.getSelectedRow();
+            row=CourseTable.getSelectedRow();    
         }
-            Object o=CourseTable.getModel().getValueAt(row, 1);
+            Object o=CourseTable.getModel().getValueAt(row, 0);
             if(o !=null){
                 selectedCourseId=Integer.parseInt(o.toString());
-                selectedCourse=CourseTable.getModel().getValueAt(row, 2).toString();
-                if(CourseController.cEnrolllist.isEmpty()){
+                selectedCourse=CourseTable.getModel().getValueAt(row, 0).toString();
                     cc.viewCourseEnrollDetailfromDB(selectedCourseId);
-                }else{
-                    cc.viewCourseEnrollDetail();
-                }
+                
                 clayout.show(container, "viewCourseJPanel");
             }else{
                 JOptionPane.showMessageDialog(null, "no course in this table, can not view detail.");
@@ -168,6 +175,11 @@ public class ManageCourse extends javax.swing.JPanel {
     //import value from database
     public void setTable(List<Object[]> ol){
         DefaultTableModel tableModel=(DefaultTableModel) CourseTable.getModel();
+        if (tableModel.getRowCount() > 0) {
+                    for (int i = tableModel.getRowCount() - 1; i > -1; i--) {
+                        tableModel.removeRow(i);
+                    }
+                }
         //tableModel.setColumnIdentifiers(new Object[]{"ID", "Name", "StarttoEndDate","Time", "Location","Subject", "Instructor"}); 
         ol.forEach((e)-> {tableModel.insertRow(ol.indexOf(e),e);});
        CourseTable.setModel(tableModel);

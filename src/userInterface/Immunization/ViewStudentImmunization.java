@@ -65,19 +65,20 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
         tbnView1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(650, 400));
+        setPreferredSize(new java.awt.Dimension(820, 520));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel7.setText("Immunization Records for student: ");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
+        jLabel7.setText("Immunization Records for Student: ");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, -1, -1));
 
+        RecordTable2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         RecordTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Vaccine name", "Completed doses", "Required Doses", "Previous dose Date", "Past due date?", "id"
+                "Vaccine Name", "Completed Doses", "Required Doses", "Previous Dose Date", "Past Due Date", "ID"
             }
         ) {
             Class[] types = new Class [] {
@@ -98,23 +99,21 @@ public class ViewStudentImmunization extends javax.swing.JPanel {
         jScrollPane3.setViewportView(RecordTable2);
         if (RecordTable2.getColumnModel().getColumnCount() > 0) {
             RecordTable2.getColumnModel().getColumn(0).setResizable(false);
-            RecordTable2.getColumnModel().getColumn(1).setResizable(false);
-            RecordTable2.getColumnModel().getColumn(2).setResizable(false);
-            RecordTable2.getColumnModel().getColumn(3).setResizable(false);
             RecordTable2.getColumnModel().getColumn(4).setResizable(false);
+            RecordTable2.getColumnModel().getColumn(5).setMaxWidth(50);
         }
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, -1, 100));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 770, 200));
 
         tbnView1.setBackground(new java.awt.Color(255, 255, 255));
         tbnView1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tbnView1.setText("Update Vaccine Record info");
+        tbnView1.setText("Update Vaccine Record Info");
         tbnView1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbnView1ActionPerformed(evt);
             }
         });
-        add(tbnView1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, -1, -1));
+        add(tbnView1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 350, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     

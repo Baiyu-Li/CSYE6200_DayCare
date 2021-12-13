@@ -12,5 +12,6 @@ import Model.Organization.AbstractOrganization;
  * @author fuyanping
  */
 public abstract class AbstractFactory {
-    public abstract AbstractOrganization getObject(String s);
+    public abstract AbstractOrganization getObjectwithString(String s);
+    //public abstract AbstractOrganization getObject(Object[] data);
 }

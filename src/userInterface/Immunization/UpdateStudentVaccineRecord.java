@@ -101,16 +101,16 @@ public class UpdateStudentVaccineRecord extends javax.swing.JPanel {
         vaccineNameField = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(650, 400));
+        setPreferredSize(new java.awt.Dimension(820, 520));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel7.setText("Update Records for student: ");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
+        jLabel7.setText("Update Records for Student: ");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, -1, -1));
 
         tbnView1.setBackground(new java.awt.Color(255, 255, 255));
         tbnView1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tbnView1.setText("Update Vaccine info");
+        tbnView1.setText("Update Vaccine Info");
         tbnView1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbnView1ActionPerformed(evt);
@@ -118,37 +118,45 @@ public class UpdateStudentVaccineRecord extends javax.swing.JPanel {
         });
         add(tbnView1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, -1, -1));
 
+        vaccineCountField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         vaccineCountField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vaccineCountFieldActionPerformed(evt);
             }
         });
-        add(vaccineCountField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 120, -1));
+        add(vaccineCountField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 120, -1));
 
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Last Vaccine dose date");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Vaccine Name");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, -1, -1));
 
+        reqCountField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         reqCountField.setText("reqCountField");
-        add(reqCountField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, -1, -1));
+        add(reqCountField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 230, -1, -1));
 
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Vaccine Required Count");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
 
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Vaccine Count");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, -1, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, -1, -1));
 
+        lastDostDate1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lastDostDate1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lastDostDate1ActionPerformed(evt);
             }
         });
-        add(lastDostDate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 120, -1));
+        add(lastDostDate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 260, 120, -1));
 
+        vaccineNameField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         vaccineNameField.setText("vaccineNameField");
-        add(vaccineNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, -1, -1));
+        add(vaccineNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     

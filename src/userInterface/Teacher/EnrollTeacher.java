@@ -5,10 +5,13 @@
 package userInterface.Teacher;
 
 import Controller.SqliteController;
+import Model.Person.Student;
+import Model.Person.Teacher;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import userInterface.Student.ManageStudent;
 
 /**
  *
@@ -16,18 +19,17 @@ import userInterface.Student.ManageStudent;
  */
 public class EnrollTeacher extends javax.swing.JPanel {
 
-    JPanel container;
+    JPanel rightPanel;
+    List<Teacher> teacherDirectory;
     
     /**
      * Creates new form manageTeacher
      */
-    private CardLayout clayout;
-    public EnrollTeacher(JPanel container) {
+    public EnrollTeacher(JPanel rp) {
         initComponents();     
-        this.container = container;
-        SqliteController.test();
-        clayout = (CardLayout) container.getLayout();
+        rightPanel = rp;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,8 +39,6 @@ public class EnrollTeacher extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        btnBack = new javax.swing.JButton();
         btnEnroll = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -46,28 +46,14 @@ public class EnrollTeacher extends javax.swing.JPanel {
         txtAge = new javax.swing.JTextField();
         txtLname = new javax.swing.JTextField();
         txtFname = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        cmbGender = new javax.swing.JComboBox<>();
+        btnBack1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(820, 520));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel1.setText("Age Range");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, -1, -1));
-
-        btnBack.setBackground(new java.awt.Color(255, 255, 255));
-        btnBack.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnBack.setText("<< Back");
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackActionPerformed(evt);
-            }
-        });
-        add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 350, 90, -1));
 
         btnEnroll.setBackground(new java.awt.Color(255, 255, 255));
         btnEnroll.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -77,19 +63,19 @@ public class EnrollTeacher extends javax.swing.JPanel {
                 btnEnrollActionPerformed(evt);
             }
         });
-        add(btnEnroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 350, 110, -1));
+        add(btnEnroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 110, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("First Name");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Age");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Gender");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, -1, -1));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, -1, -1));
 
         txtAge.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtAge.addActionListener(new java.awt.event.ActionListener() {
@@ -97,7 +83,7 @@ public class EnrollTeacher extends javax.swing.JPanel {
                 txtAgeActionPerformed(evt);
             }
         });
-        add(txtAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 230, 100, -1));
+        add(txtAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 250, 100, -1));
 
         txtLname.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtLname.addActionListener(new java.awt.event.ActionListener() {
@@ -105,7 +91,7 @@ public class EnrollTeacher extends javax.swing.JPanel {
                 txtLnameActionPerformed(evt);
             }
         });
-        add(txtLname, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, 100, -1));
+        add(txtLname, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 100, -1));
 
         txtFname.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtFname.addActionListener(new java.awt.event.ActionListener() {
@@ -113,44 +99,54 @@ public class EnrollTeacher extends javax.swing.JPanel {
                 txtFnameActionPerformed(evt);
             }
         });
-        add(txtFname, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 100, -1));
-
-        jComboBox1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 280, 128, -1));
-
-        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jRadioButton1.setText("M");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-        add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, -1, -1));
-
-        jRadioButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jRadioButton2.setText("F");
-        add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
+        add(txtFname, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 100, -1));
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel7.setText("Enroll New Teacher");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel8.setText("Last Name");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
-    }// </editor-fold>//GEN-END:initComponents
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, -1, -1));
 
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
-        ((ManageTeacher)this.container.getComponent(1)).setTable(SqliteController.getAllTeacher());
-        clayout.show(container, "teacherManage");
-    }//GEN-LAST:event_btnBackActionPerformed
+        cmbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
+        add(cmbGender, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 100, -1));
+
+        btnBack1.setBackground(new java.awt.Color(255, 255, 255));
+        btnBack1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnBack1.setText("<< Back");
+        btnBack1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBack1ActionPerformed(evt);
+            }
+        });
+        add(btnBack1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 90, -1));
+    }// </editor-fold>//GEN-END:initComponents
   
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
         // TODO add your handling code here:
+         if (txtFname.getText() == null || txtFname.getText().isEmpty()
+                || txtLname.getText() == null || txtLname.getText().isEmpty()
+                || cmbGender.getSelectedItem() == null || cmbGender.getSelectedItem().toString().isEmpty()
+                || txtAge.getText() == null || txtAge.getText().isEmpty())
+               {
+            JOptionPane.showMessageDialog(this, "Sorry, the text box cannot be empty.");
+            return;
+        }
+
+        int id = SqliteController.insertTeacher(txtFname.getText(), txtLname.getText(), Integer.parseInt(txtAge.getText()), cmbGender.getSelectedItem().toString(),"aaa","bbb",
+                "23456789","1 xxx st");
+
+        if (id >0){
+            JOptionPane.showMessageDialog(this, "Teacher's enrollment is successful!");
+            CardLayout layout = (CardLayout) rightPanel.getLayout();
+            ManageTeacher mt=(ManageTeacher)rightPanel.getComponent(1);
+            mt.refreshTable();
+            layout.show(rightPanel, "teacherManage");
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "Teacher's enrollment is fail!");
+        }
         
     }//GEN-LAST:event_btnEnrollActionPerformed
 
@@ -166,23 +162,26 @@ public class EnrollTeacher extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFnameActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+        //ManageTeacher etp = new ManageTeacher(rightPanel);
+        //rightPanel.remove(this);
+        //rightPanel.add(etp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.show(rightPanel, "teacherManage");
+       
+    }//GEN-LAST:event_btnBack1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnBack1;
     private javax.swing.JButton btnEnroll;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> cmbGender;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtFname;
     private javax.swing.JTextField txtLname;
