@@ -161,6 +161,11 @@ public class MainFrame extends javax.swing.JFrame {
         teacher.setBackground(new java.awt.Color(255, 255, 255));
         teacher.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         teacher.setText("Teacher");
+        teacher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teacherActionPerformed(evt);
+            }
+        });
         workPanel.add(teacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 110, -1));
 
         student.setBackground(new java.awt.Color(255, 255, 255));
